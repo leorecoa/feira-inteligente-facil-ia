@@ -9,6 +9,7 @@ import ProductItem, { ProductItemProps } from "@/components/ProductItem";
 import SectionTitle from "@/components/SectionTitle";
 import PriceHistoryChart from "@/components/PriceHistoryChart";
 import { useToast } from "@/components/ui/use-toast";
+import AISuggestions from "@/components/AISuggestions";
 
 export default function ShoppingListDetail() {
   const { id } = useParams<{ id: string }>();
@@ -133,18 +134,16 @@ export default function ShoppingListDetail() {
     <>
       <Header
         className="px-4"
-        title={
-          <div className="flex items-center">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="mr-2 -ml-2" 
-              onClick={handleBack}
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <span>{listName}</span>
-          </div>
+        title={listName}
+        leftElement={
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="mr-2" 
+            onClick={handleBack}
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
         }
         showSearch={false}
         showNotification={false}
@@ -202,6 +201,8 @@ export default function ShoppingListDetail() {
             </div>
           </div>
         </div>
+        
+        <AISuggestions />
         
         <PriceHistoryChart productName="Banana Prata" className="mb-6" />
         
