@@ -1,14 +1,124 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ShoppingBag, TrendingUp, Calendar, Apple, PieChart, Brain } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Header from "@/components/Header";
+import BottomNav from "@/components/BottomNav";
+import PageContainer from "@/components/PageContainer";
+import ShoppingListCard from "@/components/ShoppingListCard";
+import FeatureCard from "@/components/FeatureCard";
+import SeasonalProducts from "@/components/SeasonalProducts";
+import SectionTitle from "@/components/SectionTitle";
+import { useToast } from "@/components/ui/use-toast";
+
+export default function Index() {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [recentLists, setRecentLists] = useState([
+    {
+      id: "1",
+      name: "Feira Semanal",
+      itemCount: 12,
+      date: "20/05/2025",
+      isActive: true,
+    },
+    {
+      id: "2",
+      name: "Supermercado Mensal",
+      itemCount: 32,
+      date: "15/05/2025",
+      isActive: false,
+    },
+  ]);
+
+  const handleCreateNewList = () => {
+    navigate("/nova-lista");
+  };
+
+  const handleSearchClick = () => {
+    toast({
+      title: "Pesquisa",
+      description: "Funcionalidade de pesquisa em desenvolvimento.",
+    });
+  };
+
+  const handleNotificationClick = () => {
+    toast({
+      title: "Notificações",
+      description: "Você tem 3 notificações não lidas.",
+    });
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
-};
+    <>
+      <Header 
+        onSearchClick={handleSearchClick}
+        onNotificationClick={handleNotificationClick}
+      />
+      
+      <PageContainer>
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold mb-2">Olá, bem-vindo!</h1>
+          <p className="text-muted-foreground">
+            Organize suas compras de forma inteligente e economize tempo e dinheiro.
+          </p>
+        </div>
 
-export default Index;
+        <Button 
+          className="bg-feira-green hover:bg-feira-green-dark text-white w-full mb-8"
+          size="lg"
+          onClick={handleCreateNewList}
+        >
+          <ShoppingBag className="mr-2 h-5 w-5" />
+          Criar Nova Lista de Compras
+        </Button>
+        
+        {recentLists.length > 0 && (
+          <div className="mb-8">
+            <SectionTitle>Listas Recentes</SectionTitle>
+            <div className="space-y-3">
+              {recentLists.map((list) => (
+                <ShoppingListCard key={list.id} {...list} />
+              ))}
+            </div>
+          </div>
+        )}
+        
+        <SeasonalProducts />
+        
+        <div className="mb-8">
+          <SectionTitle>Recursos Inteligentes</SectionTitle>
+          <div className="grid grid-cols-2 gap-4">
+            <FeatureCard
+              title="IA Personalizada"
+              description="Sugestões com base nos seus hábitos de compra"
+              icon={Brain}
+              color="green"
+            />
+            <FeatureCard
+              title="Sazonalidade"
+              description="Descubra frutas e verduras da estação"
+              icon={Apple}
+              color="orange"
+            />
+            <FeatureCard
+              title="Lembretes"
+              description="Notificações inteligentes para não esquecer a feira"
+              icon={Calendar}
+              color="green"
+            />
+            <FeatureCard
+              title="Histórico"
+              description="Acompanhe preços e otimize suas compras"
+              icon={TrendingUp}
+              color="orange"
+            />
+          </div>
+        </div>
+      </PageContainer>
+      
+      <BottomNav />
+    </>
+  );
+}
