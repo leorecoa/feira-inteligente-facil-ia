@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -20,6 +19,7 @@ export default function SeasonalProducts() {
   const [products, setProducts] = useState<SeasonalProduct[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [latestListId, setLatestListId] = useState<string | null>(null);
   
   useEffect(() => {
     // Simulating API call to get seasonal products
@@ -69,16 +69,38 @@ export default function SeasonalProducts() {
       unit: "kg",
       isChecked: false
     }]);
+
+    // Store the latest list ID for navigation when clicking on toast
+    setLatestListId(newList.id);
     
+    // Show clickable toast
     toast({
       title: "Lista criada com sucesso",
       description: `Nova lista "${newList.name}" foi criada com ${product.name}`,
+      duration: 5000,
+      action: (
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => navigate("/listas")}
+          className="bg-white hover:bg-gray-100"
+        >
+          Ver listas
+        </Button>
+      ),
+      // Make the entire toast clickable
+      onMouseUp: () => {
+        if (newList.id) {
+          navigate("/listas");
+        }
+      },
+      className: "cursor-pointer hover:brightness-95 transition-all"
     });
     
-    // Navigate to the new list
-    setTimeout(() => {
-      navigate("/listas");
-    }, 1500);
+    // Optional: Navigate to the new list after a delay (if you still want this behavior)
+    // setTimeout(() => {
+    //   navigate("/listas");
+    // }, 1500);
   };
   
   return (

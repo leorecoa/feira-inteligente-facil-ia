@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Leaf, Calendar, ShoppingBag } from "lucide-react";
@@ -25,6 +24,7 @@ export default function Seasonality() {
   const { toast } = useToast();
   const [currentMonth, setCurrentMonth] = useState(new Date().toLocaleString('pt-BR', { month: 'long' }));
   const [seasonalItems, setSeasonalItems] = useState<SeasonalItem[]>([]);
+  const [latestListId, setLatestListId] = useState<string | null>(null);
 
   useEffect(() => {
     // Simulando chamada para API
@@ -188,15 +188,37 @@ export default function Seasonality() {
       isChecked: false
     }]);
     
+    // Store the latest list ID for navigation when clicking on toast
+    setLatestListId(newList.id);
+    
+    // Show toast with clickable functionality
     toast({
       title: "Lista criada com sucesso",
       description: `Nova lista "${newList.name}" foi criada com ${item.name}`,
+      duration: 5000,
+      action: (
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => navigate("/listas")}
+          className="bg-white hover:bg-gray-100"
+        >
+          Ver listas
+        </Button>
+      ),
+      // Make the entire toast clickable
+      onMouseUp: () => {
+        if (newList.id) {
+          navigate("/listas");
+        }
+      },
+      className: "cursor-pointer hover:brightness-95 transition-all"
     });
     
-    // Navigate to the shopping lists
-    setTimeout(() => {
-      navigate("/listas");
-    }, 1500);
+    // Optional: Navigate to the shopping lists after a delay (if you still want this behavior)
+    // setTimeout(() => {
+    //   navigate("/listas");
+    // }, 1500);
   };
 
   return (

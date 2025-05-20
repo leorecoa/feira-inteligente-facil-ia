@@ -13,6 +13,10 @@ export default function AIChatButton() {
       title: "Assistente de IA",
       description: "O que você gostaria de saber sobre compras, receitas ou planejamento de feira?",
       duration: 4000,
+      onMouseUp: () => {
+        navigate("/ai-chat");
+      },
+      className: "cursor-pointer hover:brightness-95 transition-all"
     });
     
     // Navigate to the chat directly
