@@ -1,12 +1,14 @@
 
 import { Search, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
 interface HeaderProps {
   title?: string;
   showSearch?: boolean;
   showNotification?: boolean;
   className?: string;
+  leftElement?: ReactNode;
   onSearchClick?: () => void;
   onNotificationClick?: () => void;
 }
@@ -16,13 +18,15 @@ export default function Header({
   showSearch = true,
   showNotification = true,
   className,
+  leftElement,
   onSearchClick,
   onNotificationClick,
 }: HeaderProps) {
   return (
     <header className={cn("bg-background sticky top-0 z-40 border-b border-border", className)}>
       <div className="feira-container flex items-center justify-between h-16">
-        <div className="flex-1">
+        <div className="flex-1 flex items-center">
+          {leftElement}
           {title ? (
             <h1 className="text-lg font-medium">{title}</h1>
           ) : (
