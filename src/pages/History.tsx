@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 import PageContainer from "@/components/PageContainer";
 import BottomNav from "@/components/BottomNav";
 import SectionTitle from "@/components/SectionTitle";
-import { PriceHistoryChart } from "@/components/PriceHistoryChart";
+import PriceHistoryChart from "@/components/PriceHistoryChart";
 
 interface HistoryItem {
   id: number;
@@ -112,7 +112,7 @@ export default function HistoryPage() {
           <Card className="p-4 mb-4">
             <h3 className="font-medium mb-3">Tomate - Últimos {selectedPeriod}</h3>
             <div className="h-40">
-              <PriceHistoryChart />
+              <PriceHistoryChart productName="Tomate" />
             </div>
           </Card>
         </div>
