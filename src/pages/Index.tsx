@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingBag, TrendingUp, Calendar, Apple, PieChart, Brain } from "lucide-react";
+import { ShoppingBag, TrendingUp, Calendar, Apple, PieChart, Brain, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
@@ -49,6 +49,10 @@ export default function Index() {
       title: "Notificações",
       description: "Você tem 3 notificações não lidas.",
     });
+  };
+
+  const handleOpenAIChat = () => {
+    navigate("/ai-chat");
   };
 
   return (
@@ -120,6 +124,18 @@ export default function Index() {
           </div>
         </div>
       </PageContainer>
+      
+      {/* Floating AI chat button */}
+      <div className="fixed bottom-20 right-5 z-50">
+        <Button 
+          onClick={handleOpenAIChat}
+          size="icon"
+          className="h-14 w-14 rounded-full bg-feira-orange hover:bg-feira-orange-dark text-white shadow-lg"
+          aria-label="Fale com a IA"
+        >
+          <MessageCircle className="h-6 w-6" />
+        </Button>
+      </div>
       
       <BottomNav />
     </>
