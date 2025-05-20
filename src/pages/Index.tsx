@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingBag, TrendingUp, Calendar, Apple, PieChart, Brain, MessageCircle } from "lucide-react";
+import { ShoppingBag, TrendingUp, Calendar, Apple, PieChart, Brain, MessageCircle, Lightbulb, Leaf, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
@@ -55,8 +55,24 @@ export default function Index() {
     navigate("/ai-chat");
   };
 
+  const handleAIPersonalized = () => {
+    navigate("/ai-personalized");
+  };
+
+  const handleSeasonality = () => {
+    navigate("/seasonality");
+  };
+
+  const handleReminders = () => {
+    navigate("/reminders");
+  };
+
+  const handleHistory = () => {
+    navigate("/history");
+  };
+
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-b from-feira-green/10 via-white to-feira-orange/10">
       <Header 
         onSearchClick={handleSearchClick}
         onNotificationClick={handleNotificationClick}
@@ -100,26 +116,30 @@ export default function Index() {
             <FeatureCard
               title="IA Personalizada"
               description="Sugestões com base nos seus hábitos de compra"
-              icon={Brain}
+              icon={Lightbulb}
               color="green"
+              onClick={handleAIPersonalized}
             />
             <FeatureCard
               title="Sazonalidade"
               description="Descubra frutas e verduras da estação"
-              icon={Apple}
+              icon={Leaf}
               color="orange"
+              onClick={handleSeasonality}
             />
             <FeatureCard
               title="Lembretes"
               description="Notificações inteligentes para não esquecer a feira"
               icon={Calendar}
               color="green"
+              onClick={handleReminders}
             />
             <FeatureCard
               title="Histórico"
               description="Acompanhe preços e otimize suas compras"
-              icon={TrendingUp}
+              icon={History}
               color="orange"
+              onClick={handleHistory}
             />
           </div>
         </div>
@@ -138,6 +158,6 @@ export default function Index() {
       </div>
       
       <BottomNav />
-    </>
+    </div>
   );
 }

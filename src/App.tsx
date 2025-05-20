@@ -8,6 +8,10 @@ import Index from "./pages/Index";
 import ShoppingLists from "./pages/ShoppingLists";
 import ShoppingListDetail from "./pages/ShoppingListDetail";
 import AIChat from "./pages/AIChat";
+import AIPersonalized from "./pages/AIPersonalized";
+import Seasonality from "./pages/Seasonality";
+import Reminders from "./pages/Reminders";
+import History from "./pages/History";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +27,10 @@ const App = () => (
           <Route path="/listas" element={<ShoppingLists />} />
           <Route path="/lista/:id" element={<ShoppingListDetail />} />
           <Route path="/ai-chat" element={<AIChat />} />
+          <Route path="/ai-personalized" element={<AIPersonalized />} />
+          <Route path="/seasonality" element={<Seasonality />} />
+          <Route path="/reminders" element={<Reminders />} />
+          <Route path="/history" element={<History />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

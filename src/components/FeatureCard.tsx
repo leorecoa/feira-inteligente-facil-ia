@@ -9,6 +9,7 @@ interface FeatureCardProps {
   icon: LucideIcon;
   color?: "green" | "orange" | "default";
   className?: string;
+  onClick?: () => void;
 }
 
 export default function FeatureCard({
@@ -17,6 +18,7 @@ export default function FeatureCard({
   icon: Icon,
   color = "default",
   className,
+  onClick,
 }: FeatureCardProps) {
   const getColorClass = () => {
     switch (color) {
@@ -30,7 +32,14 @@ export default function FeatureCard({
   };
 
   return (
-    <Card className={cn("p-4 h-full", className)}>
+    <Card 
+      className={cn(
+        "p-4 h-full transition-all hover:shadow-md", 
+        onClick && "cursor-pointer hover:border-feira-green/50",
+        className
+      )}
+      onClick={onClick}
+    >
       <div className={cn("w-12 h-12 rounded-full flex items-center justify-center mb-4", getColorClass())}>
         <Icon className="h-6 w-6" />
       </div>

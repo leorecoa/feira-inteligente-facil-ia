@@ -1,0 +1,172 @@
+
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Leaf, Calendar, ShoppingBag } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Header from "@/components/Header";
+import PageContainer from "@/components/PageContainer";
+import BottomNav from "@/components/BottomNav";
+import SectionTitle from "@/components/SectionTitle";
+
+interface SeasonalItem {
+  id: number;
+  name: string;
+  category: "frutas" | "legumes" | "verduras";
+  price: number;
+  imageSrc: string;
+}
+
+export default function Seasonality() {
+  const navigate = useNavigate();
+  const [currentMonth, setCurrentMonth] = useState(new Date().toLocaleString('pt-BR', { month: 'long' }));
+  const [seasonalItems, setSeasonalItems] = useState<SeasonalItem[]>([]);
+
+  useEffect(() => {
+    // Simulando chamada para API
+    const items: SeasonalItem[] = [
+      { 
+        id: 1, 
+        name: "Abacate", 
+        category: "frutas", 
+        price: 6.99, 
+        imageSrc: "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=800&auto=format&fit=crop" 
+      },
+      { 
+        id: 2, 
+        name: "Laranja", 
+        category: "frutas", 
+        price: 3.49, 
+        imageSrc: "https://images.unsplash.com/photo-1547514701-42782101795e?w=800&auto=format&fit=crop" 
+      },
+      { 
+        id: 3, 
+        name: "Mexerica", 
+        category: "frutas", 
+        price: 4.99, 
+        imageSrc: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=800&auto=format&fit=crop" 
+      },
+      { 
+        id: 4, 
+        name: "Abobrinha", 
+        category: "legumes", 
+        price: 3.99, 
+        imageSrc: "https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=800&auto=format&fit=crop" 
+      },
+      { 
+        id: 5, 
+        name: "Chuchu", 
+        category: "legumes", 
+        price: 2.49, 
+        imageSrc: "https://images.unsplash.com/photo-1562155955-1cb2d73488d7?w=800&auto=format&fit=crop" 
+      },
+      { 
+        id: 6, 
+        name: "Espinafre", 
+        category: "verduras", 
+        price: 3.99, 
+        imageSrc: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=800&auto=format&fit=crop" 
+      },
+      { 
+        id: 7, 
+        name: "Couve", 
+        category: "verduras", 
+        price: 2.99, 
+        imageSrc: "https://images.unsplash.com/photo-1631125915902-d8abe9225ff2?w=800&auto=format&fit=crop" 
+      },
+    ];
+    setSeasonalItems(items);
+  }, []);
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-feira-orange/20 via-white to-feira-orange/10">
+      <Header
+        leftElement={
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="mr-2" 
+            onClick={handleGoBack}
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+        }
+        title="Sazonalidade"
+        showSearch={false}
+        showNotification={false}
+      />
+
+      <PageContainer>
+        <div className="mb-6 bg-feira-orange/10 p-4 rounded-lg">
+          <div className="flex items-center mb-3">
+            <div className="w-10 h-10 rounded-full bg-feira-orange/20 flex items-center justify-center mr-3">
+              <Leaf className="h-5 w-5 text-feira-orange" />
+            </div>
+            <div>
+              <h2 className="text-lg font-medium">Produtos da Estação</h2>
+              <div className="flex items-center text-sm text-muted-foreground">
+                <Calendar className="h-4 w-4 mr-1" />
+                <span>Mês de {currentMonth}</span>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground mt-2">
+            Produtos da estação geralmente têm melhor qualidade, sabor e preço. Confira o que está na época:
+          </p>
+        </div>
+
+        <Tabs defaultValue="frutas" className="mb-6">
+          <TabsList className="w-full">
+            <TabsTrigger value="frutas" className="flex-1">Frutas</TabsTrigger>
+            <TabsTrigger value="legumes" className="flex-1">Legumes</TabsTrigger>
+            <TabsTrigger value="verduras" className="flex-1">Verduras</TabsTrigger>
+          </TabsList>
+          
+          {["frutas", "legumes", "verduras"].map((category) => (
+            <TabsContent key={category} value={category} className="mt-4">
+              <div className="grid grid-cols-2 gap-4">
+                {seasonalItems
+                  .filter(item => item.category === category)
+                  .map(item => (
+                    <Card key={item.id} className="overflow-hidden">
+                      <div className="h-32 bg-muted relative">
+                        <img 
+                          src={item.imageSrc} 
+                          alt={item.name} 
+                          className="w-full h-full object-cover" 
+                        />
+                        <span className="absolute top-2 right-2 bg-feira-orange text-white text-xs font-medium px-1.5 py-0.5 rounded">
+                          Da Estação
+                        </span>
+                      </div>
+                      <div className="p-3">
+                        <h3 className="font-medium text-sm">{item.name}</h3>
+                        <p className="text-feira-orange-dark text-sm font-medium mt-1">
+                          R$ {item.price.toFixed(2)}
+                        </p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="w-full mt-2 text-feira-orange border border-feira-orange/30 hover:bg-feira-orange/10"
+                        >
+                          <ShoppingBag className="h-3 w-3 mr-1" />
+                          Adicionar
+                        </Button>
+                      </div>
+                    </Card>
+                  ))}
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+      </PageContainer>
+
+      <BottomNav />
+    </div>
+  );
+}
