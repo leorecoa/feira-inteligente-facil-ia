@@ -183,7 +183,7 @@ export default function Index() {
         </div>
       </PageContainer>
       
-      {/* Enhanced AI chat button with improved label */}
+      {/* Enhanced AI chat button with improved styling and animations */}
       <div className="fixed bottom-20 right-5 z-50 animate-fade-in" style={{animationDelay: "800ms"}}>
         <div className="flex flex-col items-end">
           <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md py-2 px-4 mb-2 text-sm animate-pulse">
@@ -193,10 +193,10 @@ export default function Index() {
           <Button 
             onClick={openAIHelp}
             size="icon"
-            className="h-14 w-14 rounded-full bg-feira-orange hover:bg-feira-orange-dark hover:scale-110 text-white shadow-lg transition-all duration-300"
+            className="h-14 w-14 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:scale-110 text-white shadow-lg transition-all duration-300 animate-pulse-subtle"
             aria-label="Fale com a IA"
           >
-            <MessageCircle className="h-6 w-6 animate-pulse-subtle" />
+            <MessageCircle className="h-6 w-6 animate-bounce" />
           </Button>
         </div>
       </div>
