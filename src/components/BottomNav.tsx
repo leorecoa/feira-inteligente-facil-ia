@@ -1,40 +1,70 @@
 
-import { Home, ShoppingBag, BarChart2, User } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { Home, ShoppingCart, List, BarChart3, User } from "lucide-react";
 
-export default function BottomNav() {
+const BottomNav = () => {
   const location = useLocation();
-  
-  const navItems = [
-    { name: "Início", icon: Home, path: "/" },
-    { name: "Minhas Listas", icon: ShoppingBag, path: "/listas" },
-    { name: "Estatísticas", icon: BarChart2, path: "/estatisticas" },
-    { name: "Perfil", icon: User, path: "/perfil" },
-  ];
+  const [path, setPath] = useState(location.pathname);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [location.pathname]);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background z-50">
-      <nav className="flex items-center justify-around h-16">
-        {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
-          return (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={cn(
-                "flex flex-col items-center justify-center w-full h-full transition-colors",
-                isActive
-                  ? "text-feira-green font-medium"
-                  : "text-muted-foreground hover:text-feira-green-light"
-              )}
-            >
-              <item.icon className={cn("h-5 w-5 mb-1", isActive && "fill-feira-green/20")} />
-              <span className="text-xs">{item.name}</span>
-            </Link>
-          );
-        })}
-      </nav>
-    </div>
+    <nav className="fixed bottom-0 left-0 w-full bg-white border-t py-2 px-6 z-50 flex items-center justify-between">
+      <Link
+        to="/"
+        className={`flex flex-col items-center ${
+          path === "/" ? "text-feira-green font-medium" : "text-gray-500"
+        }`}
+      >
+        <Home className="h-6 w-6" />
+        <span className="text-xs mt-1">Início</span>
+      </Link>
+
+      <Link
+        to="/listas"
+        className={`flex flex-col items-center ${
+          path.includes("/lista") ? "text-feira-green font-medium" : "text-gray-500"
+        }`}
+      >
+        <ShoppingCart className="h-6 w-6" />
+        <span className="text-xs mt-1">Compras</span>
+      </Link>
+
+      <Link
+        to="/history"
+        className={`flex flex-col items-center ${
+          path === "/history" ? "text-feira-green font-medium" : "text-gray-500"
+        }`}
+      >
+        <List className="h-6 w-6" />
+        <span className="text-xs mt-1">Histórico</span>
+      </Link>
+
+      <Link
+        to="/estatisticas"
+        className={`flex flex-col items-center ${
+          path === "/estatisticas" ? "text-feira-green font-medium" : "text-gray-500"
+        }`}
+      >
+        <BarChart3 className="h-6 w-6" />
+        <span className="text-xs mt-1">Estatísticas</span>
+      </Link>
+
+      <Link
+        to="/perfil"
+        className={`flex flex-col items-center ${
+          path === "/perfil" ? "text-feira-green font-medium" : "text-gray-500"
+        }`}
+      >
+        <User className="h-6 w-6" />
+        <span className="text-xs mt-1">Perfil</span>
+      </Link>
+    </nav>
   );
-}
+};
+
+export default BottomNav;

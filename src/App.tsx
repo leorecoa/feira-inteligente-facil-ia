@@ -15,6 +15,7 @@ import Seasonality from "./pages/Seasonality";
 import Reminders from "./pages/Reminders";
 import History from "./pages/History";
 import Profile from "./pages/Profile";
+import Statistics from "./pages/Statistics";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/reminders" element={<Reminders />} />
           <Route path="/history" element={<History />} />
           <Route path="/perfil" element={<Profile />} />
+          <Route path="/estatisticas" element={<Statistics />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
