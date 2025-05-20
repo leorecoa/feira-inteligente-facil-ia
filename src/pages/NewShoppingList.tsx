@@ -14,6 +14,7 @@ import ShoppingItemsList from "@/components/shopping-list/ShoppingItemsList";
 import SaveListButton from "@/components/shopping-list/SaveListButton";
 import { ShoppingListProvider, useShoppingList } from "@/contexts/ShoppingListContext";
 import { Product } from "@/components/shopping-list/types";
+import { saveShoppingList } from "@/services/shoppingListService";
 
 // Produtos comuns para sugestão
 const commonProducts: Product[] = [
@@ -41,15 +42,25 @@ export default function NewShoppingList() {
       return;
     }
 
-    // Aqui você implementaria a lógica de salvamento real
-    toast({
-      title: "Lista salva",
-      description: `"${listName}" foi salva com sucesso!`,
-    });
+    // Usando o serviço real em vez da simulação
+    try {
+      const savedList = saveShoppingList(listName, items);
+      toast({
+        title: "Lista salva",
+        description: `"${savedList.name}" foi salva com sucesso!`,
+      });
 
-    setTimeout(() => {
-      navigate("/listas");
-    }, 1500);
+      setTimeout(() => {
+        navigate("/listas");
+      }, 1500);
+    } catch (error) {
+      console.error("Erro ao salvar lista:", error);
+      toast({
+        title: "Erro ao salvar",
+        description: "Ocorreu um erro ao salvar sua lista. Tente novamente.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleBack = () => {
