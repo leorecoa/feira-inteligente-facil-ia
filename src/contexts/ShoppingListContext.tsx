@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { Product, ShoppingItem } from "@/components/shopping-list/types";
 
@@ -59,10 +60,44 @@ export const ShoppingListProvider: React.FC<ShoppingListProviderProps> = ({
 
   const handleCreateCustomItem = () => {
     if (newItemName.trim()) {
+      // Try to determine category based on name keywords
+      let category = "Outros";
+      
+      const name = newItemName.toLowerCase();
+      
+      if (name.includes("carne") || name.includes("bife") || name.includes("frango") || 
+          name.includes("porco") || name.includes("linguiça") || name.includes("costela")) {
+        category = "acougue";
+      } else if (name.includes("fralda") || name.includes("chupeta") || name.includes("bebê") || 
+                name.includes("mamadeira")) {
+        category = "bebes";
+      } else if (name.includes("refrigerante") || name.includes("suco") || name.includes("água") || 
+                name.includes("cerveja") || name.includes("vinho")) {
+        category = "bebidas";
+      } else if (name.includes("congelado") || name.includes("sorvete") || name.includes("pizza") || 
+                name.includes("gelo")) {
+        category = "congelados";
+      } else if (name.includes("liquidificador") || name.includes("batedeira") || 
+                name.includes("televisor") || name.includes("geladeira")) {
+        category = "eletronicos";
+      } else if (name.includes("lata") || name.includes("enlatado") || name.includes("atum") || 
+                name.includes("sardinha") || name.includes("milho") || name.includes("ervilha")) {
+        category = "enlatados";
+      } else if (name.includes("maçã") || name.includes("banana") || name.includes("abacaxi") || 
+                name.includes("laranja")) {
+        category = "frutas";
+      } else if (name.includes("tomate") || name.includes("cenoura") || name.includes("batata") || 
+                name.includes("cebola")) {
+        category = "legumes";
+      } else if (name.includes("alface") || name.includes("couve") || name.includes("rúcula") || 
+                name.includes("espinafre")) {
+        category = "verduras";
+      }
+      
       const newItem: ShoppingItem = {
         id: `item-${Date.now()}`,
         name: newItemName.trim(),
-        category: "Outros", 
+        category: category, 
         price: 0, // Set price to zero
         amount: 1,
         unit: "un",
