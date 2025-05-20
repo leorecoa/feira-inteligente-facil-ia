@@ -31,49 +31,49 @@ export default function Seasonality() {
         name: "Abacate", 
         category: "frutas", 
         price: 6.99, 
-        imageSrc: "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=800&auto=format&fit=crop" 
+        imageSrc: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=800&auto=format&fit=crop" 
       },
       { 
         id: 2, 
         name: "Laranja", 
         category: "frutas", 
         price: 3.49, 
-        imageSrc: "https://images.unsplash.com/photo-1547514701-42782101795e?w=800&auto=format&fit=crop" 
+        imageSrc: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=800&auto=format&fit=crop" 
       },
       { 
         id: 3, 
         name: "Mexerica", 
         category: "frutas", 
         price: 4.99, 
-        imageSrc: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=800&auto=format&fit=crop" 
+        imageSrc: "https://images.unsplash.com/photo-1612564148954-59545876eaa0?w=800&auto=format&fit=crop" 
       },
       { 
         id: 4, 
         name: "Abobrinha", 
         category: "legumes", 
         price: 3.99, 
-        imageSrc: "https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=800&auto=format&fit=crop" 
+        imageSrc: "https://images.unsplash.com/photo-1594282486552-05a5f0a547c2?w=800&auto=format&fit=crop" 
       },
       { 
         id: 5, 
         name: "Chuchu", 
         category: "legumes", 
         price: 2.49, 
-        imageSrc: "https://images.unsplash.com/photo-1562155955-1cb2d73488d7?w=800&auto=format&fit=crop" 
+        imageSrc: "https://images.unsplash.com/photo-1608665812983-4c3fbc59d5fd?w=800&auto=format&fit=crop" 
       },
       { 
         id: 6, 
         name: "Espinafre", 
         category: "verduras", 
         price: 3.99, 
-        imageSrc: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=800&auto=format&fit=crop" 
+        imageSrc: "https://images.unsplash.com/photo-1515686619296-3b2136e40f8a?w=800&auto=format&fit=crop" 
       },
       { 
         id: 7, 
         name: "Couve", 
         category: "verduras", 
         price: 2.99, 
-        imageSrc: "https://images.unsplash.com/photo-1631125915902-d8abe9225ff2?w=800&auto=format&fit=crop" 
+        imageSrc: "https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=800&auto=format&fit=crop" 
       },
     ];
     setSeasonalItems(items);

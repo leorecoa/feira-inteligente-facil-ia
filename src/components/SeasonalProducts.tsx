@@ -21,21 +21,21 @@ export default function SeasonalProducts() {
     // Simulating API call to get seasonal products
     const currentMonth = new Date().getMonth();
     
-    // Sample seasonal data with real images
+    // Sample seasonal data with improved realistic images
     const seasonalData: {[key: number]: SeasonalProduct[]} = {
       // Each month has different seasonal products
       0: [ // January
-        { id: "1", name: "Abacaxi", imageSrc: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&auto=format&fit=crop", price: 5.99 },
-        { id: "2", name: "Caju", imageSrc: "https://images.unsplash.com/photo-1595584325312-5f1f23e467c9?w=800&auto=format&fit=crop", price: 3.49 },
-        { id: "3", name: "Ameixa", imageSrc: "https://images.unsplash.com/photo-1597006546250-766bb2468274?w=800&auto=format&fit=crop", price: 7.99 },
-        { id: "4", name: "Manga", imageSrc: "https://images.unsplash.com/photo-1605027620664-ec4cfd1e5c59?w=800&auto=format&fit=crop", price: 2.99 },
+        { id: "1", name: "Abacaxi", imageSrc: "https://images.unsplash.com/photo-1589820296156-2454bb8a6ad1?w=800&auto=format&fit=crop", price: 5.99 },
+        { id: "2", name: "Caju", imageSrc: "https://images.unsplash.com/photo-1605493725255-1da5618bc8ce?w=800&auto=format&fit=crop", price: 3.49 },
+        { id: "3", name: "Ameixa", imageSrc: "https://images.unsplash.com/photo-1596363505729-4190a9506133?w=800&auto=format&fit=crop", price: 7.99 },
+        { id: "4", name: "Manga", imageSrc: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=800&auto=format&fit=crop", price: 2.99 },
       ],
       // Add more months...
       4: [ // May
-        { id: "5", name: "Abacate", imageSrc: "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=800&auto=format&fit=crop", price: 6.99 },
-        { id: "6", name: "Banana Prata", imageSrc: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800&auto=format&fit=crop", price: 2.49 },
-        { id: "7", name: "Laranja", imageSrc: "https://images.unsplash.com/photo-1547514701-42782101795e?w=800&auto=format&fit=crop", price: 3.29 },
-        { id: "8", name: "Mexerica", imageSrc: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=800&auto=format&fit=crop", price: 4.99 },
+        { id: "5", name: "Abacate", imageSrc: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=800&auto=format&fit=crop", price: 6.99 },
+        { id: "6", name: "Banana Prata", imageSrc: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800&auto=format&fit=crop", price: 2.49 },
+        { id: "7", name: "Laranja", imageSrc: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=800&auto=format&fit=crop", price: 3.29 },
+        { id: "8", name: "Mexerica", imageSrc: "https://images.unsplash.com/photo-1612564148954-59545876eaa0?w=800&auto=format&fit=crop", price: 4.99 },
       ],
     };
     
