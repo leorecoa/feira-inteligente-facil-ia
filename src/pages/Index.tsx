@@ -76,15 +76,22 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
+    <div className="min-h-screen relative overflow-x-hidden">
+      {/* Full-screen background image with gradient overlay */}
+      <div 
+        className="full-page-background" 
+        style={{ backgroundImage: "url(https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000)" }}
+      />
+      <div className="gradient-overlay" />
+      
       <Header 
         onSearchClick={handleSearchClick}
         onNotificationClick={handleNotificationClick}
-        backgroundImage="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000"
+        fullCoverBackground={true}
       />
       
-      <PageContainer>
-        <div className="mb-8">
+      <PageContainer className="relative z-10">
+        <div className="mb-8 animate-fade-in">
           <h1 className="text-2xl font-bold mb-2">Olá, bem-vindo!</h1>
           <p className="text-muted-foreground">
             Organize suas compras de forma inteligente e economize tempo e dinheiro.
@@ -92,7 +99,8 @@ export default function Index() {
         </div>
 
         <Button 
-          className="bg-feira-green hover:bg-feira-green-dark text-white w-full mb-8"
+          className="bg-feira-green hover:bg-feira-green-dark text-white w-full mb-8 animate-fade-in"
+          style={{animationDelay: "100ms"}}
           size="lg"
           onClick={handleCreateNewList}
         >
@@ -101,7 +109,7 @@ export default function Index() {
         </Button>
         
         {recentLists.length > 0 && (
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in" style={{animationDelay: "200ms"}}>
             <div className="flex justify-between items-center mb-3">
               <SectionTitle className="m-0">Listas Recentes</SectionTitle>
               <Button 
@@ -120,11 +128,15 @@ export default function Index() {
           </div>
         )}
         
-        <AISuggestions />
+        <div className="animate-fade-in" style={{animationDelay: "300ms"}}>
+          <AISuggestions />
+        </div>
         
-        <SeasonalProducts />
+        <div className="animate-fade-in" style={{animationDelay: "400ms"}}>
+          <SeasonalProducts />
+        </div>
         
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in" style={{animationDelay: "500ms"}}>
           <SectionTitle>Recursos Inteligentes</SectionTitle>
           <div className="grid grid-cols-2 gap-4">
             <FeatureCard
@@ -160,7 +172,7 @@ export default function Index() {
       </PageContainer>
       
       {/* Enhanced AI chat button with label */}
-      <div className="fixed bottom-20 right-5 z-50">
+      <div className="fixed bottom-20 right-5 z-50 animate-fade-in" style={{animationDelay: "600ms"}}>
         <div className="flex flex-col items-end">
           <div className="bg-white rounded-lg shadow-md py-1 px-3 mb-2 text-sm animate-pulse">
             Peça ajuda à nossa IA!

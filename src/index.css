@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -121,4 +122,59 @@
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(76, 175, 80, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 6px rgba(76, 175, 80, 0.6));
+  }
+}
+
+/* Custom animations */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-title-entrance {
+  animation: scaleIn 0.6s ease-out forwards, titleGlow 3s ease-in-out 0.6s infinite;
+}
+
+.animate-title-entrance-delayed {
+  animation: scaleIn 0.6s 0.2s ease-out forwards, titleGlow 3s ease-in-out 0.8s infinite;
+}
+
+.full-page-background {
+  @apply fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat;
+  z-index: -1;
+}
+
+.gradient-overlay {
+  @apply fixed inset-0 w-full h-full bg-gradient-to-b from-transparent via-white/80 to-white;
+  z-index: -1;
 }

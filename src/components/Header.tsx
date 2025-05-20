@@ -13,6 +13,7 @@ interface HeaderProps {
   onSearchClick?: () => void;
   onNotificationClick?: () => void;
   backgroundImage?: string;
+  fullCoverBackground?: boolean;
 }
 
 export default function Header({
@@ -25,6 +26,7 @@ export default function Header({
   onSearchClick,
   onNotificationClick,
   backgroundImage,
+  fullCoverBackground = false,
 }: HeaderProps) {
   return (
     <header className={cn(
@@ -33,7 +35,10 @@ export default function Header({
     )}>
       {backgroundImage && (
         <div 
-          className="absolute inset-0 opacity-10 bg-cover bg-center" 
+          className={cn(
+            "absolute opacity-10 bg-cover bg-center",
+            fullCoverBackground ? "fixed inset-0 w-screen h-screen z-0 bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10" : "inset-0"
+          )}
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
       )}
@@ -43,9 +48,9 @@ export default function Header({
           {title ? (
             <h1 className="text-lg font-medium">{title}</h1>
           ) : (
-            <div className="flex items-center">
-              <span className="text-feira-green font-bold text-xl">Minha Feira</span>
-              <span className="font-bold text-xl text-feira-orange ml-1">Fácil Fácil</span>
+            <div className="flex items-center animate-fade-in">
+              <span className="text-feira-green font-bold text-xl animate-title-entrance">Minha Feira</span>
+              <span className="font-bold text-xl text-feira-orange ml-1 animate-title-entrance-delayed">Fácil Fácil</span>
             </div>
           )}
         </div>

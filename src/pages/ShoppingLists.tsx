@@ -52,11 +52,18 @@ export default function ShoppingLists() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
-      <Header title="Minhas Listas" showSearch={false} />
+    <div className="min-h-screen relative overflow-x-hidden">
+      {/* Full-screen background image with gradient overlay */}
+      <div 
+        className="full-page-background" 
+        style={{ backgroundImage: "url(https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000)" }}
+      />
+      <div className="gradient-overlay" />
       
-      <PageContainer>
-        <div className="mb-4 flex items-center space-x-2">
+      <Header title="Minhas Listas" showSearch={false} fullCoverBackground={true} />
+      
+      <PageContainer className="relative z-10">
+        <div className="mb-4 flex items-center space-x-2 animate-fade-in">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input 
@@ -77,13 +84,13 @@ export default function ShoppingLists() {
         </div>
         
         {filteredLists.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-3 animate-fade-in" style={{animationDelay: "100ms"}}>
             {filteredLists.map((list) => (
               <ShoppingListCard key={list.id} {...list} />
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in" style={{animationDelay: "100ms"}}>
             <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
               <ShoppingBag className="h-8 w-8 text-muted-foreground" />
             </div>
