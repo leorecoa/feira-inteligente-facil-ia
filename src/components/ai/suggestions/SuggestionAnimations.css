@@ -1,0 +1,102 @@
+
+@keyframes shine {
+  100% {
+    transform: translateX(100%) skew(-12deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+@keyframes textColorShift {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(15deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.03);
+  }
+}
+
+.animate-shine {
+  animation: shine 0.85s ease-in-out;
+}
+
+.animate-textColorShift {
+  animation: textColorShift 4s infinite ease-in-out;
+}
+
+.animate-pulse-subtle {
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.5);
+  opacity: 0.6;
+}
+
+.bubble-1 {
+  width: 60px;
+  height: 60px;
+  left: 10%;
+  top: 20%;
+  animation: float 7s infinite ease-in-out;
+}
+
+.bubble-2 {
+  width: 40px;
+  height: 40px;
+  right: 20%;
+  top: 30%;
+  animation: float 5s infinite ease-in-out;
+  animation-delay: 1s;
+}
+
+.bubble-3 {
+  width: 30px;
+  height: 30px;
+  left: 30%;
+  bottom: 20%;
+  animation: float 6s infinite ease-in-out;
+  animation-delay: 2s;
+}
+
+.bubble-4 {
+  width: 25px;
+  height: 25px;
+  right: 10%;
+  bottom: 30%;
+  animation: float 8s infinite ease-in-out;
+  animation-delay: 3s;
+}
+
+.bubble-5 {
+  width: 15px;
+  height: 15px;
+  left: 50%;
+  top: 50%;
+  animation: float 4s infinite ease-in-out;
+  animation-delay: 1.5s;
+}
