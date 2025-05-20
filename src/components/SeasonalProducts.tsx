@@ -6,6 +6,8 @@ import SectionTitle from "./SectionTitle";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { saveShoppingList } from "@/services/shoppingListService";
 
 interface SeasonalProduct {
   id: string;
@@ -17,6 +19,7 @@ interface SeasonalProduct {
 export default function SeasonalProducts() {
   const [products, setProducts] = useState<SeasonalProduct[]>([]);
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   useEffect(() => {
     // Simulating API call to get seasonal products
@@ -55,9 +58,27 @@ export default function SeasonalProducts() {
     navigate("/seasonality");
   };
 
-  const handleAddToCart = (productId: string) => {
-    console.log(`Produto ${productId} adicionado à lista de compras`);
-    // Here you would add the product to the shopping list
+  const handleAddToCart = (product: SeasonalProduct) => {
+    // Create a new shopping list with just this product
+    const newList = saveShoppingList(`Lista ${product.name}`, [{
+      id: `item-${Date.now()}`,
+      name: product.name,
+      category: "Frutas",
+      price: product.price,
+      amount: 1,
+      unit: "kg",
+      isChecked: false
+    }]);
+    
+    toast({
+      title: "Lista criada com sucesso",
+      description: `Nova lista "${newList.name}" foi criada com ${product.name}`,
+    });
+    
+    // Navigate to the new list
+    setTimeout(() => {
+      navigate("/listas");
+    }, 1500);
   };
   
   return (
@@ -65,7 +86,7 @@ export default function SeasonalProducts() {
       <div className="flex items-center justify-between mb-4">
         <SectionTitle className="mb-0">Frutas da Estação</SectionTitle>
         <button 
-          className="flex items-center text-sm text-feira-green font-medium hover:text-feira-green-dark transition-colors"
+          className="flex items-center text-sm text-black font-bold hover:text-feira-green-dark transition-colors"
           onClick={handleSeeAllClick}
         >
           Ver todas <ArrowRight className="ml-1 h-4 w-4" />
@@ -97,7 +118,7 @@ export default function SeasonalProducts() {
                 variant="ghost" 
                 size="sm" 
                 className="w-full mt-2 text-feira-green border border-feira-green/30 hover:bg-feira-green/10"
-                onClick={() => handleAddToCart(product.id)}
+                onClick={() => handleAddToCart(product)}
               >
                 Adicionar
               </Button>

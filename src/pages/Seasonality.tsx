@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 import PageContainer from "@/components/PageContainer";
 import BottomNav from "@/components/BottomNav";
 import SectionTitle from "@/components/SectionTitle";
+import { saveShoppingList } from "@/services/shoppingListService";
 
 interface SeasonalItem {
   id: number;
@@ -170,10 +171,32 @@ export default function Seasonality() {
   };
 
   const handleAddToCart = (item: SeasonalItem) => {
+    // Create a new shopping list with just this item
+    const categoryMap: Record<string, string> = {
+      'frutas': 'Frutas',
+      'legumes': 'Legumes',
+      'verduras': 'Verduras'
+    };
+    
+    const newList = saveShoppingList(`Lista ${item.name}`, [{
+      id: `item-${Date.now()}`,
+      name: item.name,
+      category: categoryMap[item.category] || 'Outros',
+      price: item.price,
+      amount: 1,
+      unit: item.category === 'frutas' ? 'kg' : 'un',
+      isChecked: false
+    }]);
+    
     toast({
-      title: "Produto adicionado",
-      description: `${item.name} foi adicionado à sua lista de compras.`,
+      title: "Lista criada com sucesso",
+      description: `Nova lista "${newList.name}" foi criada com ${item.name}`,
     });
+    
+    // Navigate to the shopping lists
+    setTimeout(() => {
+      navigate("/listas");
+    }, 1500);
   };
 
   return (

@@ -13,11 +13,11 @@ const BottomNav = () => {
   }, [location.pathname]);
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white border-t py-2 px-6 z-50 flex items-center justify-between">
+    <nav className="fixed bottom-0 left-0 w-full bg-feira-green border-t py-2 px-6 z-50 flex items-center justify-between">
       <Link
         to="/"
         className={`flex flex-col items-center ${
-          path === "/" ? "text-feira-green font-medium" : "text-gray-500"
+          path === "/" ? "text-feira-orange font-medium" : "text-white"
         }`}
       >
         <Home className="h-6 w-6" />
@@ -27,7 +27,7 @@ const BottomNav = () => {
       <Link
         to="/listas"
         className={`flex flex-col items-center ${
-          path.includes("/lista") ? "text-feira-green font-medium" : "text-gray-500"
+          path.includes("/lista") ? "text-feira-orange font-medium" : "text-white"
         }`}
       >
         <ShoppingCart className="h-6 w-6" />
@@ -37,7 +37,7 @@ const BottomNav = () => {
       <Link
         to="/history"
         className={`flex flex-col items-center ${
-          path === "/history" ? "text-feira-green font-medium" : "text-gray-500"
+          path === "/history" ? "text-feira-orange font-medium" : "text-white"
         }`}
       >
         <List className="h-6 w-6" />
@@ -47,7 +47,7 @@ const BottomNav = () => {
       <Link
         to="/estatisticas"
         className={`flex flex-col items-center ${
-          path === "/estatisticas" ? "text-feira-green font-medium" : "text-gray-500"
+          path === "/estatisticas" ? "text-feira-orange font-medium" : "text-white"
         }`}
       >
         <BarChart3 className="h-6 w-6" />
@@ -57,7 +57,7 @@ const BottomNav = () => {
       <Link
         to="/perfil"
         className={`flex flex-col items-center ${
-          path === "/perfil" ? "text-feira-green font-medium" : "text-gray-500"
+          path === "/perfil" ? "text-feira-orange font-medium" : "text-white"
         }`}
       >
         <User className="h-6 w-6" />

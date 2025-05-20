@@ -15,19 +15,20 @@ export default function AIChatButton() {
       duration: 4000,
     });
     
-    // Small delay before navigating to the chat to allow the toast to be seen
-    setTimeout(() => {
-      navigate("/ai-chat");
-    }, 1500);
+    // Navigate to the chat
+    navigate("/ai-chat");
   };
 
   return (
     <div className="fixed bottom-20 right-5 z-50 animate-fade-in" style={{animationDelay: "800ms"}}>
       <div className="flex flex-col items-end">
-        <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md py-2 px-4 mb-2 text-sm animate-pulse">
-          <p className="font-medium text-feira-green">Peça ajuda à nossa IA!</p>
-          <p className="text-xs text-muted-foreground">Receitas, dicas de compras, ideias...</p>
-        </div>
+        <button 
+          onClick={openAIHelp}
+          className="bg-feira-green/90 backdrop-blur-sm rounded-lg shadow-md py-2 px-4 mb-2 text-sm transition-transform hover:scale-105 cursor-pointer"
+        >
+          <p className="font-medium text-feira-orange">Peça ajuda à nossa IA!</p>
+          <p className="text-xs text-feira-orange/80">Receitas, dicas de compras, ideias...</p>
+        </button>
         <Button 
           onClick={openAIHelp}
           size="icon"
