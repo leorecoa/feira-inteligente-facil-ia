@@ -1,16 +1,14 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Settings } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import Header from "@/components/Header";
-import { generateAIResponse, AIChatMessage, getOpenAIApiKey } from "@/utils/aiService";
-import ApiKeyForm from "@/components/ai/ApiKeyForm";
+import { generateAIResponse, AIChatMessage } from "@/utils/aiService";
 import ChatMessageList, { Message } from "@/components/ai/ChatMessageList";
 import MessageInputForm from "@/components/ai/MessageInputForm";
 import QuickSuggestions from "@/components/ai/QuickSuggestions";
-import AIStatusBanner from "@/components/ai/AIStatusBanner";
 import AIFeatureCarousel from "@/components/ai/AIFeatureCarousel";
 import { useSpeechSynthesis } from "@/hooks/useSpeechSynthesis";
 import { QUICK_SUGGESTIONS } from "@/constants/aiSuggestions";
@@ -30,13 +28,6 @@ export default function AIChat() {
   ]);
   
   const [isLoading, setIsLoading] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(!!getOpenAIApiKey());
-
-  useEffect(() => {
-    // Check if API key exists when component mounts
-    setHasApiKey(!!getOpenAIApiKey());
-  }, []);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -124,15 +115,6 @@ export default function AIChat() {
     }
   };
 
-  const handleApiKeySaved = () => {
-    setShowSettings(false);
-    setHasApiKey(true);
-    toast({
-      title: "Configuração Salva",
-      description: "Agora você pode usar o assistente de IA completo com a API da OpenAI.",
-    });
-  };
-
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
       {/* Custom Header with Food-themed Background */}
@@ -151,37 +133,13 @@ export default function AIChat() {
             </Button>
           }
           title="Assistente IA"
-          rightElement={
-            <Button
-              variant="ghost"
-              size="icon"
-              className="ml-auto text-white"
-              onClick={() => setShowSettings(!showSettings)}
-              aria-label="Configurações"
-            >
-              <Settings className="h-5 w-5" />
-            </Button>
-          }
+          rightElement={null}
           showSearch={false}
           showNotification={false}
         />
       </div>
       
       <div className="flex flex-col flex-1 max-w-3xl w-full mx-auto px-4">
-        {/* API Settings Panel */}
-        {showSettings && (
-          <div className="my-3">
-            <ApiKeyForm onSave={handleApiKeySaved} onCancel={() => setShowSettings(false)} />
-          </div>
-        )}
-        
-        {/* API Status Banner */}
-        <AIStatusBanner 
-          hasApiKey={hasApiKey} 
-          showSettings={showSettings}
-          onConfigureClick={() => setShowSettings(true)} 
-        />
-        
         {/* AI Features Carousel */}
         <AIFeatureCarousel />
         
