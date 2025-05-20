@@ -12,7 +12,7 @@ import CustomItemForm from "@/components/shopping-list/CustomItemForm";
 import EmptyListState from "@/components/shopping-list/EmptyListState";
 import ShoppingItemsList from "@/components/shopping-list/ShoppingItemsList";
 import SaveListButton from "@/components/shopping-list/SaveListButton";
-import { ShoppingListProvider } from "@/contexts/ShoppingListContext";
+import { ShoppingListProvider, useShoppingList } from "@/contexts/ShoppingListContext";
 import { Product } from "@/components/shopping-list/types";
 
 // Produtos comuns para sugestão
