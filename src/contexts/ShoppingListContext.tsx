@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { Product, ShoppingItem } from "@/components/shopping-list/types";
 
@@ -47,9 +46,11 @@ export const ShoppingListProvider: React.FC<ShoppingListProviderProps> = ({
   const [isAddingItem, setIsAddingItem] = useState(false);
 
   const handleAddItem = (product: Product) => {
+    // Add item with zero price
     setItems([...items, { 
       ...product, 
       id: `item-${Date.now()}`, 
+      price: 0, // Set price to zero
       amount: 1, 
       isChecked: false 
     }]);
@@ -62,7 +63,7 @@ export const ShoppingListProvider: React.FC<ShoppingListProviderProps> = ({
         id: `item-${Date.now()}`,
         name: newItemName.trim(),
         category: "Outros", 
-        price: 0,
+        price: 0, // Set price to zero
         amount: 1,
         unit: "un",
         isChecked: false
@@ -90,7 +91,8 @@ export const ShoppingListProvider: React.FC<ShoppingListProviderProps> = ({
   };
 
   const totalItems = items.length;
-  const totalPrice = items.reduce((sum, item) => sum + (item.price || 0) * (item.amount || 1), 0);
+  // Since all prices are now zero, this will always be zero
+  const totalPrice = 0;
 
   const value = {
     listName,

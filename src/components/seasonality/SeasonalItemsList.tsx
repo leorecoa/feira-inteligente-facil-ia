@@ -24,7 +24,7 @@ export default function SeasonalItemsList({ items, onAddToCart }: SeasonalItemsL
               .map(item => (
                 <SeasonalItem 
                   key={item.id} 
-                  item={item}
+                  item={{...item, price: 0}} // Reset price to zero
                   onAddToCart={onAddToCart}
                 />
               ))}
