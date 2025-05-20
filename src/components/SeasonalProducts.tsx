@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import SectionTitle from "./SectionTitle";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface SeasonalProduct {
   id: string;
@@ -14,6 +15,7 @@ interface SeasonalProduct {
 
 export default function SeasonalProducts() {
   const [products, setProducts] = useState<SeasonalProduct[]>([]);
+  const navigate = useNavigate();
   
   useEffect(() => {
     // Simulating API call to get seasonal products
@@ -44,11 +46,18 @@ export default function SeasonalProducts() {
     return null;
   }
   
+  const handleSeeAllClick = () => {
+    navigate("/seasonality");
+  };
+  
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
         <SectionTitle className="mb-0">Frutas da Estação</SectionTitle>
-        <button className="flex items-center text-sm text-feira-green font-medium">
+        <button 
+          className="flex items-center text-sm text-feira-green font-medium hover:text-feira-green-dark transition-colors"
+          onClick={handleSeeAllClick}
+        >
           Ver todas <ArrowRight className="ml-1 h-4 w-4" />
         </button>
       </div>
