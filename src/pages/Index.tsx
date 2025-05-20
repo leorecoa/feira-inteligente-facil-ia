@@ -14,20 +14,7 @@ import AIChatButton from "@/components/AIChatButton";
 export default function Index() {
   const { toast } = useToast();
   const [recentLists, setRecentLists] = useState([
-    {
-      id: "1",
-      name: "Feira Semanal",
-      itemCount: 12,
-      date: "20/05/2025",
-      isActive: true,
-    },
-    {
-      id: "2",
-      name: "Supermercado Mensal",
-      itemCount: 32,
-      date: "15/05/2025",
-      isActive: false,
-    },
+    // All mock lists removed to clean the app for first use
   ]);
 
   const handleSearchClick = () => {

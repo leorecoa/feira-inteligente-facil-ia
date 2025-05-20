@@ -13,34 +13,7 @@ export default function ShoppingLists() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [lists, setLists] = useState([
-    {
-      id: "1",
-      name: "Feira Semanal",
-      itemCount: 12,
-      date: "20/05/2025",
-      isActive: true,
-    },
-    {
-      id: "2",
-      name: "Supermercado Mensal",
-      itemCount: 32,
-      date: "15/05/2025",
-      isActive: false,
-    },
-    {
-      id: "3",
-      name: "Frutas e Legumes",
-      itemCount: 8,
-      date: "10/05/2025",
-      isActive: false,
-    },
-    {
-      id: "4",
-      name: "Produtos de Limpeza",
-      itemCount: 6,
-      date: "05/05/2025",
-      isActive: false,
-    },
+    // All mock lists removed to clean the app for first use
   ]);
 
   const filteredLists = lists.filter(list => 
