@@ -175,8 +175,9 @@ export default function AISuggestions() {
         </div>
       )}
       
-      {/* Add this CSS for the animations */}
-      <style jsx>{`
+      {/* Add CSS for the animations */}
+      <style>
+        {`
         @keyframes shine {
           100% {
             transform: translateX(100%) skew(-12deg);
@@ -263,7 +264,8 @@ export default function AISuggestions() {
           animation: float 4s infinite ease-in-out;
           animation-delay: 1.5s;
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 }
