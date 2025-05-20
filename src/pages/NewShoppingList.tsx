@@ -1,14 +1,18 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Save, Plus, X, Check, Search, ShoppingBag } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 import Header from "@/components/Header";
 import PageContainer from "@/components/PageContainer";
-import { useToast } from "@/components/ui/use-toast";
-import ProductItem from "@/components/ProductItem";
-import ProductRegistrationButton from "@/components/ProductRegistrationButton";
+import ListNameInput from "@/components/shopping-list/ListNameInput";
+import ListSummary from "@/components/shopping-list/ListSummary";
+import ProductSearch from "@/components/shopping-list/ProductSearch";
+import CustomItemForm from "@/components/shopping-list/CustomItemForm";
+import EmptyListState from "@/components/shopping-list/EmptyListState";
+import ShoppingItemsList from "@/components/shopping-list/ShoppingItemsList";
+import SaveListButton from "@/components/shopping-list/SaveListButton";
 
 // Produtos comuns para sugestão
 const commonProducts = [
@@ -28,19 +32,12 @@ export default function NewShoppingList() {
   const [listName, setListName] = useState("Nova Lista");
   const [items, setItems] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [newItemName, setNewItemName] = useState("");
   const [isAddingItem, setIsAddingItem] = useState(false);
-
-  const filteredSuggestions = commonProducts.filter(product => 
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    !items.some(item => item.name === product.name)
-  );
 
   const handleAddItem = (product: any) => {
     setItems([...items, { ...product, id: `item-${Date.now()}`, amount: 1, isChecked: false }]);
     setSearchTerm("");
-    setShowSuggestions(false);
   };
 
   const handleCreateCustomItem = () => {
@@ -87,7 +84,6 @@ export default function NewShoppingList() {
     }
 
     // Aqui você implementaria a lógica de salvamento real
-    // Por enquanto, vamos apenas simular e navegar de volta
     toast({
       title: "Lista salva",
       description: `"${listName}" foi salva com sucesso!`,
@@ -124,159 +120,47 @@ export default function NewShoppingList() {
       />
       
       <PageContainer>
-        <div className="mb-6">
-          <Input
-            value={listName}
-            onChange={(e) => setListName(e.target.value)}
-            className="text-lg font-medium p-3 border-2 focus-visible:ring-feira-green"
-            placeholder="Nome da lista"
-          />
-        </div>
+        <ListNameInput value={listName} onChange={setListName} />
+        
+        <ListSummary totalItems={totalItems} totalPrice={totalPrice} />
 
-        <div className="mb-4">
-          <div className="text-sm text-muted-foreground">
-            {totalItems} {totalItems === 1 ? 'item' : 'itens'}
-          </div>
-          <div className="text-lg font-medium">
-            Total estimado: <span className="text-feira-green">R$ {totalPrice.toFixed(2)}</span>
-          </div>
-        </div>
-
-        <div className="relative mb-6">
-          <div className="flex items-center space-x-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Buscar produto..." 
-                className="pl-9"
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setShowSuggestions(true);
-                }}
-                onFocus={() => setShowSuggestions(true)}
-              />
-            </div>
-            <ProductRegistrationButton />
-            <Button
-              className="bg-feira-green hover:bg-feira-green-dark text-white"
-              size="icon"
-              onClick={() => setIsAddingItem(true)}
-              aria-label="Adicionar item personalizado"
-            >
-              <Plus className="h-5 w-5" />
-            </Button>
-          </div>
-          
-          {showSuggestions && searchTerm && (
-            <Card className="absolute z-10 w-full mt-1 p-2 max-h-60 overflow-y-auto">
-              {filteredSuggestions.length > 0 ? (
-                filteredSuggestions.map((product) => (
-                  <div 
-                    key={product.id}
-                    className="p-2 hover:bg-muted cursor-pointer rounded flex justify-between items-center"
-                    onClick={() => handleAddItem(product)}
-                  >
-                    <div>
-                      <div className="font-medium">{product.name}</div>
-                      <div className="text-xs text-muted-foreground">{product.category}</div>
-                    </div>
-                    <div className="text-feira-green font-medium">R$ {product.price.toFixed(2)}</div>
-                  </div>
-                ))
-              ) : (
-                <div className="p-2 text-muted-foreground text-center">
-                  <p>Nenhum produto encontrado</p>
-                  <Button 
-                    variant="link" 
-                    className="text-feira-green p-0 h-auto" 
-                    onClick={() => {
-                      setNewItemName(searchTerm);
-                      setIsAddingItem(true);
-                      setShowSuggestions(false);
-                    }}
-                  >
-                    Adicionar "{searchTerm}" como novo item
-                  </Button>
-                </div>
-              )}
-            </Card>
-          )}
-        </div>
+        <ProductSearch 
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          onAddItem={handleAddItem}
+          onCustomItemAdd={(name) => {
+            setNewItemName(name);
+            setIsAddingItem(true);
+          }}
+          onAddButtonClick={() => setIsAddingItem(true)}
+          products={commonProducts}
+          existingItems={items}
+        />
 
         {isAddingItem && (
-          <Card className="p-4 mb-4">
-            <h3 className="font-medium mb-2">Adicionar Item Personalizado</h3>
-            <Input
-              placeholder="Nome do produto"
-              className="mb-3"
-              value={newItemName}
-              onChange={(e) => setNewItemName(e.target.value)}
-              autoFocus
-            />
-            <div className="flex justify-end space-x-2">
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => {
-                  setNewItemName("");
-                  setIsAddingItem(false);
-                }}
-              >
-                <X className="h-4 w-4 mr-1" />
-                Cancelar
-              </Button>
-              <Button 
-                size="sm"
-                className="bg-feira-green hover:bg-feira-green-dark text-white"
-                onClick={handleCreateCustomItem}
-              >
-                <Check className="h-4 w-4 mr-1" />
-                Adicionar
-              </Button>
-            </div>
-          </Card>
+          <CustomItemForm 
+            itemName={newItemName}
+            onItemNameChange={setNewItemName}
+            onCancel={() => {
+              setNewItemName("");
+              setIsAddingItem(false);
+            }}
+            onAdd={handleCreateCustomItem}
+          />
         )}
 
         {items.length > 0 ? (
-          <div className="border border-border rounded-lg overflow-hidden mb-6">
-            {items.map((item) => (
-              <div key={item.id} className="relative">
-                <ProductItem
-                  {...item}
-                  onToggle={handleToggleItem}
-                  onAmountChange={handleAmountChange}
-                />
-                <button 
-                  className="absolute right-2 top-2 text-muted-foreground hover:text-destructive transition-colors p-1"
-                  onClick={() => handleRemoveItem(item.id)}
-                  aria-label="Remover item"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            ))}
-          </div>
+          <ShoppingItemsList 
+            items={items}
+            onToggleItem={handleToggleItem}
+            onAmountChange={handleAmountChange}
+            onRemoveItem={handleRemoveItem}
+          />
         ) : (
-          <div className="flex flex-col items-center justify-center py-12 text-center mb-6">
-            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-              <ShoppingBag className="h-8 w-8 text-muted-foreground" />
-            </div>
-            <h3 className="font-medium text-lg">Lista vazia</h3>
-            <p className="text-muted-foreground mt-1">
-              Adicione itens à sua lista usando a barra de busca acima
-            </p>
-          </div>
+          <EmptyListState />
         )}
 
-        <Button
-          className="bg-feira-green hover:bg-feira-green-dark text-white w-full"
-          size="lg"
-          onClick={handleSaveList}
-        >
-          <Save className="mr-2 h-5 w-5" />
-          Salvar Lista
-        </Button>
+        <SaveListButton onClick={handleSaveList} />
       </PageContainer>
     </div>
   );
