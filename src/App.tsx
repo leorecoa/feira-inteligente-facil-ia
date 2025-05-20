@@ -14,6 +14,7 @@ import AIPersonalized from "./pages/AIPersonalized";
 import Seasonality from "./pages/Seasonality";
 import Reminders from "./pages/Reminders";
 import History from "./pages/History";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/seasonality" element={<Seasonality />} />
           <Route path="/reminders" element={<Reminders />} />
           <Route path="/history" element={<History />} />
+          <Route path="/perfil" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
