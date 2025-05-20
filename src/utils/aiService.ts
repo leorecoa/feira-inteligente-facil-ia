@@ -1,9 +1,8 @@
-
 import { useToast } from "@/components/ui/use-toast";
 
 // This would normally be stored in environment variables or Supabase secrets
-// For demonstration, we're using a placeholder
-const OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"; 
+// For demonstration, we're using localStorage as a temporary solution
+const API_KEY_STORAGE_KEY = "FEIRA_OPENAI_API_KEY";
 
 export interface AIChatMessage {
   role: "user" | "assistant" | "system";
@@ -19,10 +18,23 @@ export interface AIChatResponse {
   error?: string;
 }
 
+// Function to get API key from localStorage
+export const getOpenAIApiKey = (): string => {
+  return localStorage.getItem(API_KEY_STORAGE_KEY) || "";
+};
+
+// Function to set API key to localStorage
+export const setOpenAIApiKey = (apiKey: string): void => {
+  localStorage.setItem(API_KEY_STORAGE_KEY, apiKey);
+};
+
 export const generateAIResponse = async (messages: AIChatMessage[]): Promise<AIChatResponse> => {
   try {
+    // Get API key from localStorage
+    const apiKey = getOpenAIApiKey();
+    
     // Check if OpenAI API key is provided
-    if (!OPENAI_API_KEY || OPENAI_API_KEY === "YOUR_OPENAI_API_KEY") {
+    if (!apiKey) {
       // Fall back to the local implementation if no API key
       return generateLocalResponse(messages);
     }
@@ -32,7 +44,7 @@ export const generateAIResponse = async (messages: AIChatMessage[]): Promise<AIC
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
+        "Authorization": `Bearer ${apiKey}`
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",

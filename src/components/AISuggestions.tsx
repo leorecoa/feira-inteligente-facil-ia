@@ -1,19 +1,39 @@
 
-import { useState } from "react";
-import { Bot, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Bot, Sparkles, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import SectionTitle from "./SectionTitle";
 import { useToast } from "@/components/ui/use-toast";
+import { getOpenAIApiKey } from "@/utils/aiService";
+import { useNavigate } from "react-router-dom";
 
 export default function AISuggestions() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<{item: string; reason: string}[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState(false);
+
+  useEffect(() => {
+    setHasApiKey(!!getOpenAIApiKey());
+  }, []);
 
   const generateSuggestions = () => {
     setLoading(true);
+    
+    // If no API key, redirect to the AI Chat page to set one
+    if (!hasApiKey) {
+      toast({
+        title: "API não configurada",
+        description: "Vamos configurar a API para ativar sugestões avançadas.",
+      });
+      
+      setTimeout(() => navigate("/ai-chat"), 1500);
+      setLoading(false);
+      return;
+    }
     
     // Simulando chamada para API de IA
     setTimeout(() => {
@@ -70,6 +90,12 @@ export default function AISuggestions() {
               </>
             )}
           </Button>
+          
+          {!hasApiKey && (
+            <p className="text-xs text-muted-foreground">
+              Configuração da API OpenAI necessária para sugestões avançadas
+            </p>
+          )}
         </Card>
       ) : (
         <div className="space-y-3">

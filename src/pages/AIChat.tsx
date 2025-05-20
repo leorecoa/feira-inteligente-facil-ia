@@ -1,13 +1,13 @@
-
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Send, Mic, VolumeIcon, Bot, Lightbulb, ShoppingBag, ChevronRight } from "lucide-react";
+import { ArrowLeft, Send, Mic, VolumeIcon, Bot, Lightbulb, ShoppingBag, ChevronRight, Settings } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
-import { generateAIResponse, AIChatMessage } from "@/utils/aiService";
+import { generateAIResponse, AIChatMessage, getOpenAIApiKey } from "@/utils/aiService";
+import ApiKeyForm from "@/components/ai/ApiKeyForm";
 
 // Sample quick questions for suggestion buttons
 const QUICK_SUGGESTIONS = [
@@ -43,6 +43,8 @@ export default function AIChat() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState(!!getOpenAIApiKey());
 
   useEffect(() => {
     // Scroll to bottom when messages change
@@ -63,6 +65,11 @@ export default function AIChat() {
         window.speechSynthesis.cancel();
       }
     };
+  }, []);
+
+  useEffect(() => {
+    // Check if API key exists when component mounts
+    setHasApiKey(!!getOpenAIApiKey());
   }, []);
 
   const handleGoBack = () => {
@@ -178,6 +185,15 @@ export default function AIChat() {
     }
   };
 
+  const handleApiKeySaved = () => {
+    setShowSettings(false);
+    setHasApiKey(true);
+    toast({
+      title: "Configuração Salva",
+      description: "Agora você pode usar o assistente de IA completo com a API da OpenAI.",
+    });
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
       {/* Custom Header with Food-themed Background */}
@@ -196,12 +212,51 @@ export default function AIChat() {
             </Button>
           }
           title="Assistente IA"
+          rightElement={
+            <Button
+              variant="ghost"
+              size="icon"
+              className="ml-auto text-white"
+              onClick={() => setShowSettings(!showSettings)}
+              aria-label="Configurações"
+            >
+              <Settings className="h-5 w-5" />
+            </Button>
+          }
           showSearch={false}
           showNotification={false}
         />
       </div>
       
       <div className="flex flex-col flex-1 max-w-3xl w-full mx-auto px-4">
+        {/* API Settings Panel */}
+        {showSettings && (
+          <div className="my-3">
+            <ApiKeyForm onSave={handleApiKeySaved} onCancel={() => setShowSettings(false)} />
+          </div>
+        )}
+        
+        {/* API Status Banner */}
+        {!hasApiKey && !showSettings && (
+          <div className="my-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-center justify-between">
+            <div className="flex items-center">
+              <KeyRound className="h-5 w-5 text-yellow-500 mr-2" />
+              <div>
+                <p className="text-sm font-medium">API OpenAI não configurada</p>
+                <p className="text-xs text-muted-foreground">Resposta em modo local limitado</p>
+              </div>
+            </div>
+            <Button 
+              variant="outline"
+              size="sm"
+              className="border-yellow-300 text-yellow-700 hover:bg-yellow-100"
+              onClick={() => setShowSettings(true)}
+            >
+              Configurar
+            </Button>
+          </div>
+        )}
+        
         {/* AI Features Carousel */}
         <div className="my-3 px-1 py-2 bg-white/60 rounded-lg shadow-sm">
           <div className="flex items-center space-x-2 overflow-x-auto pb-1 scrollbar-hide">
