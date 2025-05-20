@@ -19,21 +19,21 @@ export default function SeasonalProducts() {
     // Simulating API call to get seasonal products
     const currentMonth = new Date().getMonth();
     
-    // Sample seasonal data (would come from an API in real app)
+    // Sample seasonal data with real images
     const seasonalData: {[key: number]: SeasonalProduct[]} = {
-      // Each month has different seasonal products (just a few examples)
+      // Each month has different seasonal products
       0: [ // January
-        { id: "1", name: "Abacaxi", imageSrc: "/placeholder.svg", price: 5.99 },
-        { id: "2", name: "Caju", imageSrc: "/placeholder.svg", price: 3.49 },
-        { id: "3", name: "Ameixa", imageSrc: "/placeholder.svg", price: 7.99 },
-        { id: "4", name: "Manga", imageSrc: "/placeholder.svg", price: 2.99 },
+        { id: "1", name: "Abacaxi", imageSrc: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&auto=format&fit=crop", price: 5.99 },
+        { id: "2", name: "Caju", imageSrc: "https://images.unsplash.com/photo-1595584325312-5f1f23e467c9?w=800&auto=format&fit=crop", price: 3.49 },
+        { id: "3", name: "Ameixa", imageSrc: "https://images.unsplash.com/photo-1597006546250-766bb2468274?w=800&auto=format&fit=crop", price: 7.99 },
+        { id: "4", name: "Manga", imageSrc: "https://images.unsplash.com/photo-1605027620664-ec4cfd1e5c59?w=800&auto=format&fit=crop", price: 2.99 },
       ],
       // Add more months...
-      4: [ // May (current month for this example)
-        { id: "5", name: "Abacate", imageSrc: "/placeholder.svg", price: 6.99 },
-        { id: "6", name: "Banana Prata", imageSrc: "/placeholder.svg", price: 2.49 },
-        { id: "7", name: "Laranja", imageSrc: "/placeholder.svg", price: 3.29 },
-        { id: "8", name: "Mexerica", imageSrc: "/placeholder.svg", price: 4.99 },
+      4: [ // May
+        { id: "5", name: "Abacate", imageSrc: "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=800&auto=format&fit=crop", price: 6.99 },
+        { id: "6", name: "Banana Prata", imageSrc: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800&auto=format&fit=crop", price: 2.49 },
+        { id: "7", name: "Laranja", imageSrc: "https://images.unsplash.com/photo-1547514701-42782101795e?w=800&auto=format&fit=crop", price: 3.29 },
+        { id: "8", name: "Mexerica", imageSrc: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=800&auto=format&fit=crop", price: 4.99 },
       ],
     };
     
@@ -57,19 +57,17 @@ export default function SeasonalProducts() {
         {products.map((product) => (
           <Card key={product.id} className={cn(
             "flex-shrink-0 w-32 overflow-hidden transition-all",
-            "hover:border-feira-green/50 cursor-pointer"
+            "hover:border-feira-green/50 cursor-pointer hover:shadow-md"
           )}>
-            <div className="w-full h-24 bg-muted relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <img 
-                  src={product.imageSrc} 
-                  alt={product.name} 
-                  className="w-full h-full object-cover" 
-                />
-                <span className="absolute top-2 right-2 bg-feira-green text-white text-xs font-medium px-1.5 py-0.5 rounded">
-                  Da Estação
-                </span>
-              </div>
+            <div className="w-full h-32 bg-muted relative">
+              <img 
+                src={product.imageSrc} 
+                alt={product.name} 
+                className="w-full h-full object-cover" 
+              />
+              <span className="absolute top-2 right-2 bg-feira-green text-white text-xs font-medium px-1.5 py-0.5 rounded">
+                Da Estação
+              </span>
             </div>
             <div className="p-3">
               <h3 className="font-medium text-sm truncate">{product.name}</h3>

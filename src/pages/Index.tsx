@@ -9,6 +9,7 @@ import PageContainer from "@/components/PageContainer";
 import ShoppingListCard from "@/components/ShoppingListCard";
 import FeatureCard from "@/components/FeatureCard";
 import SeasonalProducts from "@/components/SeasonalProducts";
+import AISuggestions from "@/components/AISuggestions";
 import SectionTitle from "@/components/SectionTitle";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -84,6 +85,8 @@ export default function Index() {
             </div>
           </div>
         )}
+        
+        <AISuggestions />
         
         <SeasonalProducts />
         
