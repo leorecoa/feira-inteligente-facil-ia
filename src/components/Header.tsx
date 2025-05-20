@@ -9,8 +9,10 @@ interface HeaderProps {
   showNotification?: boolean;
   className?: string;
   leftElement?: ReactNode;
+  rightElement?: ReactNode;
   onSearchClick?: () => void;
   onNotificationClick?: () => void;
+  backgroundImage?: string;
 }
 
 export default function Header({
@@ -19,12 +21,23 @@ export default function Header({
   showNotification = true,
   className,
   leftElement,
+  rightElement,
   onSearchClick,
   onNotificationClick,
+  backgroundImage,
 }: HeaderProps) {
   return (
-    <header className={cn("bg-background sticky top-0 z-40 border-b border-border", className)}>
-      <div className="feira-container flex items-center justify-between h-16">
+    <header className={cn(
+      "bg-background sticky top-0 z-40 border-b border-border relative",
+      className
+    )}>
+      {backgroundImage && (
+        <div 
+          className="absolute inset-0 opacity-10 bg-cover bg-center" 
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        />
+      )}
+      <div className="feira-container flex items-center justify-between h-16 relative z-10">
         <div className="flex-1 flex items-center">
           {leftElement}
           {title ? (
@@ -37,6 +50,7 @@ export default function Header({
           )}
         </div>
         <div className="flex items-center space-x-2">
+          {rightElement}
           {showSearch && (
             <button
               onClick={onSearchClick}

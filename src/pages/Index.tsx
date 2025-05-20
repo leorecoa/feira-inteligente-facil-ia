@@ -80,6 +80,7 @@ export default function Index() {
       <Header 
         onSearchClick={handleSearchClick}
         onNotificationClick={handleNotificationClick}
+        backgroundImage="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000"
       />
       
       <PageContainer>
@@ -158,16 +159,21 @@ export default function Index() {
         </div>
       </PageContainer>
       
-      {/* Floating AI chat button */}
+      {/* Enhanced AI chat button with label */}
       <div className="fixed bottom-20 right-5 z-50">
-        <Button 
-          onClick={handleOpenAIChat}
-          size="icon"
-          className="h-14 w-14 rounded-full bg-feira-orange hover:bg-feira-orange-dark text-white shadow-lg"
-          aria-label="Fale com a IA"
-        >
-          <MessageCircle className="h-6 w-6" />
-        </Button>
+        <div className="flex flex-col items-end">
+          <div className="bg-white rounded-lg shadow-md py-1 px-3 mb-2 text-sm animate-pulse">
+            Peça ajuda à nossa IA!
+          </div>
+          <Button 
+            onClick={handleOpenAIChat}
+            size="icon"
+            className="h-14 w-14 rounded-full bg-feira-orange hover:bg-feira-orange-dark text-white shadow-lg"
+            aria-label="Fale com a IA"
+          >
+            <MessageCircle className="h-6 w-6" />
+          </Button>
+        </div>
       </div>
       
       <BottomNav />

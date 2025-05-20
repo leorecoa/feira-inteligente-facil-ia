@@ -1,21 +1,22 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Send, Mic, VolumeIcon, Bot, Lightbulb } from "lucide-react";
+import { ArrowLeft, Send, Mic, VolumeIcon, Bot, Lightbulb, ShoppingBag, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
+import { generateAIResponse, AIChatMessage } from "@/utils/aiService";
 
 // Sample quick questions for suggestion buttons
 const QUICK_SUGGESTIONS = [
-  "O que está na época?",
-  "Como armazenar bananas?",
-  "Monte minha lista",
+  "Monte uma lista para almoço de domingo",
+  "Quais legumes estão em safra?",
+  "Lista para intolerância à lactose",
+  "Frutas mais baratas do mês",
+  "Monte uma lista básica",
   "Dicas para economizar",
-  "Substituições mais baratas",
-  "Receitas rápidas",
 ];
 
 // Interface for chat messages
@@ -32,7 +33,7 @@ export default function AIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      content: "Olá! Sou sua assistente de feira. Como posso ajudar você hoje?",
+      content: "Olá! Sou sua assistente de feira inteligente. Como posso ajudar você hoje?",
       sender: "ai",
       timestamp: new Date(),
     },
@@ -84,40 +85,37 @@ export default function AIChat() {
     setIsLoading(true);
 
     try {
-      // Simulate API call to AI service
-      setTimeout(() => {
-        const mockResponses: { [key: string]: string } = {
-          "o que está na época": "Neste mês de maio, temos várias frutas e legumes na época: abacate, banana prata, laranja, mexerica, chuchu, abobrinha, cenoura e beterraba. Comprar produtos da estação geralmente significa melhor preço e qualidade!",
-          "como armazenar bananas": "Bananas devem ser armazenadas em temperatura ambiente, longe da luz solar direta. Para retardar o amadurecimento, mantenha-as separadas de outras frutas. Se já estiverem maduras, você pode guardar na geladeira por 1-2 dias, mas a casca ficará escura (a fruta continua boa).",
-          "monte minha lista": "Com base na sazonalidade atual e nos preços médios, sugiro incluir na sua lista: 1kg de bananas, 1kg de laranjas, 500g de abacate, 2kg de batatas, 500g de cenoura, 1 maço de couve, 6 ovos e 1kg de arroz. Quer que eu adicione mais algum item específico?",
-          "dicas para economizar": "Para economizar na feira: 1) Priorize produtos da estação. 2) Compare preços em diferentes bancas. 3) Faça uma lista antes e siga-a. 4) Procure frutas e legumes com pequenas imperfeições estéticas (são mais baratos e igualmente nutritivos). 5) Compre em maior quantidade itens não perecíveis quando estiverem em promoção.",
-          "substituições mais baratas": "Algumas substituições econômicas: 1) Em vez de morango (caro fora de época), prefira maçã ou banana. 2) Troque brócolis por couve, que costuma ser mais barata. 3) Substitua pimentão por cebola e cenoura em refogados. 4) Use ovos como fonte de proteína em vez de carnes caras.",
-          "receitas rápidas": "Aqui está uma receita rápida com itens básicos: Omelete de legumes - Bata 2 ovos, adicione sal e pimenta. Refogue cebola, tomate e quaisquer legumes que tenha (cenoura ralada, abobrinha). Despeje os ovos batidos e cozinhe até ficar firme. Pronto em 10 minutos!"
-        };
-
-        let aiResponse = "Não tenho informações específicas sobre isso, mas posso ajudá-lo com sugestões de produtos da estação, dicas de economia, receitas simples ou estratégias de armazenamento de alimentos.";
-        
-        // Check if the question matches any key phrases
-        const lowercaseContent = content.toLowerCase();
-        for (const [key, response] of Object.entries(mockResponses)) {
-          if (lowercaseContent.includes(key)) {
-            aiResponse = response;
-            break;
-          }
-        }
-
-        // Add AI response
+      // Prepare message history for AI context
+      const messageHistory: AIChatMessage[] = messages
+        .slice(-5) // Only use last 5 messages for context
+        .map(msg => ({
+          role: msg.sender === "ai" ? "assistant" : "user",
+          content: msg.content
+        }));
+      
+      // Add the new user message
+      messageHistory.push({ role: "user", content });
+      
+      // Get AI response
+      const response = await generateAIResponse(messageHistory);
+      
+      if (response.error) {
+        toast({
+          title: "Erro",
+          description: response.error,
+          variant: "destructive",
+        });
+      } else {
+        // Add AI response to chat
         const aiMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content: aiResponse,
+          content: response.content,
           sender: "ai",
           timestamp: new Date(),
         };
         
         setMessages((prev) => [...prev, aiMessage]);
-        setIsLoading(false);
-      }, 1500);
-
+      }
     } catch (error) {
       console.error("Error fetching AI response:", error);
       toast({
@@ -125,6 +123,7 @@ export default function AIChat() {
         description: "Não foi possível obter resposta da IA. Tente novamente mais tarde.",
         variant: "destructive",
       });
+    } finally {
       setIsLoading(false);
     }
   };
@@ -156,33 +155,73 @@ export default function AIChat() {
   };
 
   const handleVoiceInput = () => {
-    // Mock voice input functionality for future implementation
-    toast({
-      title: "Entrada por voz",
-      description: "Esta funcionalidade estará disponível em breve!",
-    });
+    // Check if browser supports speech recognition
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      toast({
+        title: "Fale agora",
+        description: "Estou ouvindo você...",
+      });
+      
+      // Implementation would go here - for now we'll just give feedback
+      setTimeout(() => {
+        toast({
+          title: "Entrada por voz",
+          description: "Esta funcionalidade estará completa em breve!",
+        });
+      }, 2000);
+    } else {
+      toast({
+        title: "Não suportado",
+        description: "Seu navegador não suporta reconhecimento de voz.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-[#A8E6A1] via-[#FFF5A1] to-[#F6E9D7]">
-      <Header
-        className="bg-transparent border-none"
-        leftElement={
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="mr-2" 
-            onClick={handleGoBack}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        }
-        title="Assistente IA"
-        showSearch={false}
-        showNotification={false}
-      />
+    <div className="flex flex-col h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
+      {/* Custom Header with Food-themed Background */}
+      <div className="relative bg-gradient-to-r from-feira-green/90 to-feira-orange/80 border-none shadow-md">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000')] bg-cover bg-center"></div>
+        <Header
+          className="bg-transparent border-none"
+          leftElement={
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="mr-2 text-white" 
+              onClick={handleGoBack}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          }
+          title="Assistente IA"
+          showSearch={false}
+          showNotification={false}
+        />
+      </div>
       
       <div className="flex flex-col flex-1 max-w-3xl w-full mx-auto px-4">
+        {/* AI Features Carousel */}
+        <div className="my-3 px-1 py-2 bg-white/60 rounded-lg shadow-sm">
+          <div className="flex items-center space-x-2 overflow-x-auto pb-1 scrollbar-hide">
+            <div className="flex-shrink-0 px-3 py-1.5 bg-feira-green/10 rounded-lg flex items-center border border-feira-green/20">
+              <Lightbulb className="h-4 w-4 text-feira-green mr-1.5" />
+              <span className="text-sm whitespace-nowrap">Sugestões inteligentes</span>
+            </div>
+            <div className="flex-shrink-0 px-3 py-1.5 bg-feira-orange/10 rounded-lg flex items-center border border-feira-orange/20">
+              <ShoppingBag className="h-4 w-4 text-feira-orange mr-1.5" />
+              <span className="text-sm whitespace-nowrap">Monte listas</span>
+              <ChevronRight className="h-3 w-3 ml-1 text-feira-orange/60" />
+            </div>
+            <div className="flex-shrink-0 px-3 py-1.5 bg-feira-green/10 rounded-lg flex items-center border border-feira-green/20">
+              <Bot className="h-4 w-4 text-feira-green mr-1.5" />
+              <span className="text-sm whitespace-nowrap">Dicas de economia</span>
+              <ChevronRight className="h-3 w-3 ml-1 text-feira-green/60" />
+            </div>
+          </div>
+        </div>
+        
         {/* Chat messages container */}
         <div 
           ref={chatContainerRef}
@@ -248,37 +287,43 @@ export default function AIChat() {
           </div>
         </div>
         
-        {/* Message input form */}
-        <form onSubmit={handleSubmit} className="flex gap-2 pb-6">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="rounded-full bg-white shadow"
-            onClick={handleVoiceInput}
-          >
-            <Mic className="h-5 w-5 text-feira-green" />
-          </Button>
-          
-          <div className="flex-1 relative">
-            <Input
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Digite sua mensagem..."
-              className="pr-10 py-6 bg-white rounded-full border-none shadow"
-              disabled={isLoading}
-            />
-            <Button
-              type="submit"
-              variant="ghost"
-              size="icon"
-              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full"
-              disabled={inputValue.trim() === "" || isLoading}
-            >
-              <Send className="h-5 w-5 text-feira-green" />
-            </Button>
+        {/* Message input form with custom footer */}
+        <div className="relative">
+          <div className="absolute bottom-full left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+          <div className="rounded-t-xl bg-white shadow-lg p-3 border-t border-feira-green/20 relative">
+            <div className="absolute inset-0 opacity-5 bg-[url('https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?q=80&w=1000')] bg-cover bg-bottom rounded-t-xl"></div>
+            <form onSubmit={handleSubmit} className="flex gap-2">
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="rounded-full bg-white shadow"
+                onClick={handleVoiceInput}
+              >
+                <Mic className="h-5 w-5 text-feira-green" />
+              </Button>
+              
+              <div className="flex-1 relative">
+                <Input
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Digite ou pergunte algo..."
+                  className="pr-10 py-6 bg-white rounded-full border-none shadow"
+                  disabled={isLoading}
+                />
+                <Button
+                  type="submit"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full"
+                  disabled={inputValue.trim() === "" || isLoading}
+                >
+                  <Send className="h-5 w-5 text-feira-green" />
+                </Button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
