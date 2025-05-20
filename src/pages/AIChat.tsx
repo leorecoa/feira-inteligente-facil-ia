@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Send, Mic, VolumeIcon, Bot, Lightbulb, ShoppingBag, ChevronRight, Settings } from "lucide-react";
+import { ArrowLeft, Send, Mic, VolumeIcon, Bot, Lightbulb, ShoppingBag, ChevronRight, Settings, KeyRound } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
