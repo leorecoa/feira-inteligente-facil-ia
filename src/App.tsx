@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ShoppingLists from "./pages/ShoppingLists";
 import ShoppingListDetail from "./pages/ShoppingListDetail";
+import NewShoppingList from "./pages/NewShoppingList";
 import AIChat from "./pages/AIChat";
 import AIPersonalized from "./pages/AIPersonalized";
 import Seasonality from "./pages/Seasonality";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/listas" element={<ShoppingLists />} />
           <Route path="/lista/:id" element={<ShoppingListDetail />} />
+          <Route path="/nova-lista" element={<NewShoppingList />} />
           <Route path="/ai-chat" element={<AIChat />} />
           <Route path="/ai-personalized" element={<AIPersonalized />} />
           <Route path="/seasonality" element={<Seasonality />} />

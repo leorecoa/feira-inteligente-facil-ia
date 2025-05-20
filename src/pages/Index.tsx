@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingBag, TrendingUp, Calendar, Apple, PieChart, Brain, MessageCircle, Lightbulb, Leaf, History } from "lucide-react";
+import { ShoppingBag, Calendar, Apple, Brain, MessageCircle, Lightbulb, Leaf, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
@@ -71,8 +71,12 @@ export default function Index() {
     navigate("/history");
   };
 
+  const handleViewAllLists = () => {
+    navigate("/listas");
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-feira-green/10 via-white to-feira-orange/10">
+    <div className="min-h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
       <Header 
         onSearchClick={handleSearchClick}
         onNotificationClick={handleNotificationClick}
@@ -97,7 +101,16 @@ export default function Index() {
         
         {recentLists.length > 0 && (
           <div className="mb-8">
-            <SectionTitle>Listas Recentes</SectionTitle>
+            <div className="flex justify-between items-center mb-3">
+              <SectionTitle className="m-0">Listas Recentes</SectionTitle>
+              <Button 
+                variant="link" 
+                className="text-feira-green p-0 h-auto"
+                onClick={handleViewAllLists}
+              >
+                Ver todas
+              </Button>
+            </div>
             <div className="space-y-3">
               {recentLists.map((list) => (
                 <ShoppingListCard key={list.id} {...list} />

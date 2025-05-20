@@ -52,7 +52,7 @@ export default function ShoppingLists() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
       <Header title="Minhas Listas" showSearch={false} />
       
       <PageContainer>
@@ -114,6 +114,6 @@ export default function ShoppingLists() {
       </PageContainer>
       
       <BottomNav />
-    </>
+    </div>
   );
 }
