@@ -188,10 +188,10 @@ export default function Seasonality() {
       isChecked: false
     }]);
     
-    // Store the latest list ID for navigation when clicking on toast
+    // Store the latest list ID for navigation
     setLatestListId(newList.id);
     
-    // Show toast with clickable functionality
+    // Show toast that immediately navigates to the specific list when clicked
     toast({
       title: "Lista criada com sucesso",
       description: `Nova lista "${newList.name}" foi criada com ${item.name}`,
@@ -200,25 +200,25 @@ export default function Seasonality() {
         <Button 
           variant="outline" 
           size="sm" 
-          onClick={() => navigate("/listas")}
+          onClick={() => navigate(`/lista/${newList.id}`)}
           className="bg-white hover:bg-gray-100"
         >
-          Ver listas
+          Ver lista
         </Button>
       ),
-      // Make the entire toast clickable
+      // Make the entire toast clickable to go to the specific list
       onMouseUp: () => {
         if (newList.id) {
-          navigate("/listas");
+          navigate(`/lista/${newList.id}`);
         }
       },
       className: "cursor-pointer hover:brightness-95 transition-all"
     });
     
-    // Optional: Navigate to the shopping lists after a delay (if you still want this behavior)
+    // Optional: Navigate to the specific list directly
     // setTimeout(() => {
-    //   navigate("/listas");
-    // }, 1500);
+    //   navigate(`/lista/${newList.id}`);
+    // }, 1000);
   };
 
   return (

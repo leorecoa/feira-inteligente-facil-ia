@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -70,10 +71,10 @@ export default function SeasonalProducts() {
       isChecked: false
     }]);
 
-    // Store the latest list ID for navigation when clicking on toast
+    // Store the latest list ID for navigation
     setLatestListId(newList.id);
     
-    // Show clickable toast
+    // Show toast that immediately navigates to the list when clicked
     toast({
       title: "Lista criada com sucesso",
       description: `Nova lista "${newList.name}" foi criada com ${product.name}`,
@@ -82,25 +83,25 @@ export default function SeasonalProducts() {
         <Button 
           variant="outline" 
           size="sm" 
-          onClick={() => navigate("/listas")}
+          onClick={() => navigate(`/lista/${newList.id}`)}
           className="bg-white hover:bg-gray-100"
         >
-          Ver listas
+          Ver lista
         </Button>
       ),
-      // Make the entire toast clickable
+      // Make the entire toast clickable to go to the specific list
       onMouseUp: () => {
         if (newList.id) {
-          navigate("/listas");
+          navigate(`/lista/${newList.id}`);
         }
       },
       className: "cursor-pointer hover:brightness-95 transition-all"
     });
     
-    // Optional: Navigate to the new list after a delay (if you still want this behavior)
+    // Optional: Navigate directly to the specific list
     // setTimeout(() => {
-    //   navigate("/listas");
-    // }, 1500);
+    //   navigate(`/lista/${newList.id}`);
+    // }, 1000);
   };
   
   return (
