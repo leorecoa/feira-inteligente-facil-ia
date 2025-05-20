@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import SectionTitle from "./SectionTitle";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 interface SeasonalProduct {
   id: string;
@@ -29,13 +30,17 @@ export default function SeasonalProducts() {
         { id: "2", name: "Caju", imageSrc: "https://images.unsplash.com/photo-1605493725255-1da5618bc8ce?w=800&auto=format&fit=crop", price: 0 },
         { id: "3", name: "Ameixa", imageSrc: "https://images.unsplash.com/photo-1596363505729-4190a9506133?w=800&auto=format&fit=crop", price: 0 },
         { id: "4", name: "Manga", imageSrc: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=800&auto=format&fit=crop", price: 0 },
+        { id: "5", name: "Melancia", imageSrc: "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=800&auto=format&fit=crop", price: 0 },
+        { id: "6", name: "Pêssego", imageSrc: "https://images.unsplash.com/photo-1595743825637-cdaec953eba7?w=800&auto=format&fit=crop", price: 0 },
       ],
       // Add more months...
       4: [ // May
-        { id: "5", name: "Abacate", imageSrc: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=800&auto=format&fit=crop", price: 0 },
-        { id: "6", name: "Banana Prata", imageSrc: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800&auto=format&fit=crop", price: 0 },
-        { id: "7", name: "Laranja", imageSrc: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=800&auto=format&fit=crop", price: 0 },
-        { id: "8", name: "Mexerica", imageSrc: "/lovable-uploads/addb90dc-f718-4d26-96d6-f2b5fab8b45d.png", price: 0 },
+        { id: "7", name: "Abacate", imageSrc: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=800&auto=format&fit=crop", price: 0 },
+        { id: "8", name: "Banana Prata", imageSrc: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800&auto=format&fit=crop", price: 0 },
+        { id: "9", name: "Laranja", imageSrc: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=800&auto=format&fit=crop", price: 0 },
+        { id: "10", name: "Mexerica", imageSrc: "/lovable-uploads/addb90dc-f718-4d26-96d6-f2b5fab8b45d.png", price: 0 },
+        { id: "11", name: "Maçã", imageSrc: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=800&auto=format&fit=crop", price: 0 },
+        { id: "12", name: "Uva", imageSrc: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=800&auto=format&fit=crop", price: 0 },
       ],
     };
     
@@ -48,6 +53,11 @@ export default function SeasonalProducts() {
   
   const handleSeeAllClick = () => {
     navigate("/seasonality");
+  };
+
+  const handleAddToCart = (productId: string) => {
+    console.log(`Produto ${productId} adicionado à lista de compras`);
+    // Here you would add the product to the shopping list
   };
   
   return (
@@ -83,6 +93,14 @@ export default function SeasonalProducts() {
               <p className="text-feira-green-dark text-sm font-medium mt-1">
                 R$ {product.price.toFixed(2)}
               </p>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="w-full mt-2 text-feira-green border border-feira-green/30 hover:bg-feira-green/10"
+                onClick={() => handleAddToCart(product.id)}
+              >
+                Adicionar
+              </Button>
             </div>
           </Card>
         ))}
