@@ -104,7 +104,7 @@ export default function Index() {
       
       <PageContainer className="relative z-10">
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-2xl font-bold mb-2 text-center bg-gradient-to-r from-feira-green to-feira-orange bg-clip-text text-transparent animate-pulse-subtle">Olá, bem-vindo!</h1>
+          <h1 className="text-2xl font-bold mb-2 text-center text-black animate-pulse-subtle">Olá, bem-vindo!</h1>
           <p className="text-muted-foreground text-center animate-fade-in" style={{animationDelay: "200ms"}}>
             Organize suas compras de forma inteligente e economize tempo e dinheiro.
           </p>
