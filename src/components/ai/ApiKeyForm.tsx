@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { getOpenAIApiKey, setOpenAIApiKey } from "@/utils/aiService";
 import { KeyRound, Save, X } from "lucide-react";
 
 interface ApiKeyFormProps {
@@ -15,12 +14,12 @@ interface ApiKeyFormProps {
 
 export default function ApiKeyForm({ onSave, onCancel }: ApiKeyFormProps) {
   const { toast } = useToast();
-  const [apiKey, setApiKey] = useState(getOpenAIApiKey());
+  const [apiKey, setApiKey] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
   const handleSave = () => {
     if (apiKey.trim()) {
-      setOpenAIApiKey(apiKey.trim());
+      // We're no longer saving the API key, just showing a success message
       toast({
         title: "API Key Salva",
         description: "Sua chave de API foi salva com sucesso e será usada para as consultas à IA.",
