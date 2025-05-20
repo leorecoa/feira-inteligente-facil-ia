@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 import SuggestionBubbles from "./SuggestionBubbles";
 import SuggestionPrompt from "./SuggestionPrompt";
 import SuggestionsList from "./SuggestionsList";
@@ -11,6 +12,7 @@ import "./SuggestionAnimations.css";
 
 export default function SuggestionsContainer() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<{item: string; reason: string}[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -56,6 +58,11 @@ export default function SuggestionsContainer() {
     }, 1500);
   };
 
+  // Instead of generating suggestions, let's navigate to AI chat
+  const goToAIChat = () => {
+    navigate("/ai-chat");
+  };
+
   return (
     <div className="relative">
       {!showSuggestions ? (
@@ -73,11 +80,11 @@ export default function SuggestionsContainer() {
           <SuggestionPrompt />
           
           <div className="flex flex-col w-full space-y-3 relative z-10">
-            <GenerateButton loading={loading} onClick={generateSuggestions} />
+            <GenerateButton loading={loading} onClick={goToAIChat} />
           </div>
           
           <div className="w-full pt-3 relative z-10">
-            <div className="flex items-center justify-start space-x-1.5 text-xs text-muted-foreground animate-fade-in">
+            <div className="flex items-center justify-start space-x-1.5 text-xs text-black animate-fade-in">
               <Sparkles className="h-3 w-3 text-feira-orange" />
               <span>Nossa IA aprende com suas compras para sugerir produtos melhores</span>
             </div>

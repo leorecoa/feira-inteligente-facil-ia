@@ -15,7 +15,7 @@ export default function AIChatButton() {
       duration: 4000,
     });
     
-    // Navigate to the chat
+    // Navigate to the chat directly
     navigate("/ai-chat");
   };
 
@@ -24,19 +24,11 @@ export default function AIChatButton() {
       <div className="flex flex-col items-end">
         <button 
           onClick={openAIHelp}
-          className="bg-feira-green/90 backdrop-blur-sm rounded-lg shadow-md py-2 px-4 mb-2 text-sm transition-transform hover:scale-105 cursor-pointer"
+          className="bg-feira-green rounded-lg shadow-md py-2 px-4 mb-2 text-sm transition-transform hover:scale-105 cursor-pointer"
         >
           <p className="font-medium text-feira-orange">Peça ajuda à nossa IA!</p>
           <p className="text-xs text-feira-orange/80">Receitas, dicas de compras, ideias...</p>
         </button>
-        <Button 
-          onClick={openAIHelp}
-          size="icon"
-          className="h-14 w-14 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 hover:scale-110 text-white shadow-lg transition-all duration-300 animate-pulse-subtle"
-          aria-label="Fale com a IA"
-        >
-          <MessageCircle className="h-6 w-6 animate-bounce" />
-        </Button>
       </div>
     </div>
   );

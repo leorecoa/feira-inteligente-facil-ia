@@ -17,50 +17,50 @@ const BottomNav = () => {
       <Link
         to="/"
         className={`flex flex-col items-center ${
-          path === "/" ? "text-feira-orange font-medium" : "text-white"
+          path === "/" ? "text-feira-orange font-medium" : "text-black"
         }`}
       >
-        <Home className="h-6 w-6" />
+        <Home className="h-6 w-6 text-yellow-400" />
         <span className="text-xs mt-1">Início</span>
       </Link>
 
       <Link
         to="/listas"
         className={`flex flex-col items-center ${
-          path.includes("/lista") ? "text-feira-orange font-medium" : "text-white"
+          path.includes("/lista") ? "text-feira-orange font-medium" : "text-black"
         }`}
       >
-        <ShoppingCart className="h-6 w-6" />
+        <ShoppingCart className="h-6 w-6 text-yellow-400" />
         <span className="text-xs mt-1">Compras</span>
       </Link>
 
       <Link
         to="/history"
         className={`flex flex-col items-center ${
-          path === "/history" ? "text-feira-orange font-medium" : "text-white"
+          path === "/history" ? "text-feira-orange font-medium" : "text-black"
         }`}
       >
-        <List className="h-6 w-6" />
+        <List className="h-6 w-6 text-yellow-400" />
         <span className="text-xs mt-1">Histórico</span>
       </Link>
 
       <Link
         to="/estatisticas"
         className={`flex flex-col items-center ${
-          path === "/estatisticas" ? "text-feira-orange font-medium" : "text-white"
+          path === "/estatisticas" ? "text-feira-orange font-medium" : "text-black"
         }`}
       >
-        <BarChart3 className="h-6 w-6" />
+        <BarChart3 className="h-6 w-6 text-yellow-400" />
         <span className="text-xs mt-1">Estatísticas</span>
       </Link>
 
       <Link
         to="/perfil"
         className={`flex flex-col items-center ${
-          path === "/perfil" ? "text-feira-orange font-medium" : "text-white"
+          path === "/perfil" ? "text-feira-orange font-medium" : "text-black"
         }`}
       >
-        <User className="h-6 w-6" />
+        <User className="h-6 w-6 text-yellow-400" />
         <span className="text-xs mt-1">Perfil</span>
       </Link>
     </nav>
