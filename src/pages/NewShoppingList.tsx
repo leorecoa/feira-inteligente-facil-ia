@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, Plus, X, Check, Search, ShoppingBag } from "lucide-react";
@@ -9,6 +8,7 @@ import Header from "@/components/Header";
 import PageContainer from "@/components/PageContainer";
 import { useToast } from "@/components/ui/use-toast";
 import ProductItem from "@/components/ProductItem";
+import ProductRegistrationButton from "@/components/ProductRegistrationButton";
 
 // Produtos comuns para sugestão
 const commonProducts = [
@@ -157,6 +157,7 @@ export default function NewShoppingList() {
                 onFocus={() => setShowSuggestions(true)}
               />
             </div>
+            <ProductRegistrationButton />
             <Button
               className="bg-feira-green hover:bg-feira-green-dark text-white"
               size="icon"
