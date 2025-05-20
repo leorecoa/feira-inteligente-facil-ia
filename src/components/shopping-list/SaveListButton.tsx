@@ -1,6 +1,7 @@
 
 import { Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useShoppingList } from "@/contexts/ShoppingListContext";
 
 interface SaveListButtonProps {
   onClick: () => void;

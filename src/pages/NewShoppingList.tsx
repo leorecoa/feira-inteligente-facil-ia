@@ -1,7 +1,6 @@
 
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Plus } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import Header from "@/components/Header";
@@ -13,9 +12,11 @@ import CustomItemForm from "@/components/shopping-list/CustomItemForm";
 import EmptyListState from "@/components/shopping-list/EmptyListState";
 import ShoppingItemsList from "@/components/shopping-list/ShoppingItemsList";
 import SaveListButton from "@/components/shopping-list/SaveListButton";
+import { ShoppingListProvider } from "@/contexts/ShoppingListContext";
+import { Product } from "@/components/shopping-list/types";
 
 // Produtos comuns para sugestão
-const commonProducts = [
+const commonProducts: Product[] = [
   { id: "s1", name: "Banana", category: "Frutas", price: 5.99, unit: "kg" },
   { id: "s2", name: "Maçã", category: "Frutas", price: 8.99, unit: "kg" },
   { id: "s3", name: "Tomate", category: "Legumes", price: 6.99, unit: "kg" },
@@ -29,51 +30,8 @@ const commonProducts = [
 export default function NewShoppingList() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [listName, setListName] = useState("Nova Lista");
-  const [items, setItems] = useState<any[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [newItemName, setNewItemName] = useState("");
-  const [isAddingItem, setIsAddingItem] = useState(false);
 
-  const handleAddItem = (product: any) => {
-    setItems([...items, { ...product, id: `item-${Date.now()}`, amount: 1, isChecked: false }]);
-    setSearchTerm("");
-  };
-
-  const handleCreateCustomItem = () => {
-    if (newItemName.trim()) {
-      const newItem = {
-        id: `item-${Date.now()}`,
-        name: newItemName.trim(),
-        category: "Outros", 
-        price: 0,
-        amount: 1,
-        unit: "un",
-        isChecked: false
-      };
-      setItems([...items, newItem]);
-      setNewItemName("");
-      setIsAddingItem(false);
-    }
-  };
-
-  const handleRemoveItem = (id: string) => {
-    setItems(items.filter(item => item.id !== id));
-  };
-
-  const handleToggleItem = (id: string, checked: boolean) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, isChecked: checked } : item
-    ));
-  };
-
-  const handleAmountChange = (id: string, amount: number) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, amount } : item
-    ));
-  };
-
-  const handleSaveList = () => {
+  const handleSaveList = (items: any[], listName: string) => {
     if (items.length === 0) {
       toast({
         title: "Lista vazia",
@@ -98,70 +56,55 @@ export default function NewShoppingList() {
     navigate(-1);
   };
 
-  const totalItems = items.length;
-  const totalPrice = items.reduce((sum, item) => sum + (item.price || 0) * (item.amount || 1), 0);
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
-      <Header
-        leftElement={
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="mr-2" 
-            onClick={handleBack}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-        }
-        title="Nova Lista"
-        showSearch={false}
-        showNotification={false}
-      />
-      
-      <PageContainer>
-        <ListNameInput value={listName} onChange={setListName} />
-        
-        <ListSummary totalItems={totalItems} totalPrice={totalPrice} />
-
-        <ProductSearch 
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          onAddItem={handleAddItem}
-          onCustomItemAdd={(name) => {
-            setNewItemName(name);
-            setIsAddingItem(true);
-          }}
-          onAddButtonClick={() => setIsAddingItem(true)}
-          products={commonProducts}
-          existingItems={items}
+    <ShoppingListProvider initialProducts={commonProducts}>
+      <div className="min-h-screen bg-gradient-to-b from-feira-green/20 via-white to-feira-orange/10">
+        <Header
+          leftElement={
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="mr-2" 
+              onClick={handleBack}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          }
+          title="Nova Lista"
+          showSearch={false}
+          showNotification={false}
         />
+        
+        <PageContainer>
+          <ListNameInput />
+          
+          <ListSummary />
 
-        {isAddingItem && (
-          <CustomItemForm 
-            itemName={newItemName}
-            onItemNameChange={setNewItemName}
-            onCancel={() => {
-              setNewItemName("");
-              setIsAddingItem(false);
-            }}
-            onAdd={handleCreateCustomItem}
-          />
-        )}
+          <ProductSearch products={commonProducts} />
 
-        {items.length > 0 ? (
-          <ShoppingItemsList 
-            items={items}
-            onToggleItem={handleToggleItem}
-            onAmountChange={handleAmountChange}
-            onRemoveItem={handleRemoveItem}
-          />
-        ) : (
-          <EmptyListState />
-        )}
-
-        <SaveListButton onClick={handleSaveList} />
-      </PageContainer>
-    </div>
+          <ShoppingItemsContext />
+          
+          <SaveListButtonWithContext onSave={handleSaveList} />
+        </PageContainer>
+      </div>
+    </ShoppingListProvider>
   );
+}
+
+function ShoppingItemsContext() {
+  const { isAddingItem, items } = useShoppingList();
+  
+  return (
+    <>
+      {isAddingItem && <CustomItemForm />}
+      
+      {items.length > 0 ? <ShoppingItemsList /> : <EmptyListState />}
+    </>
+  );
+}
+
+function SaveListButtonWithContext({ onSave }: { onSave: (items: any[], listName: string) => void }) {
+  const { items, listName } = useShoppingList();
+  
+  return <SaveListButton onClick={() => onSave(items, listName)} />;
 }

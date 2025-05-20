@@ -1,17 +1,15 @@
 
 import { Input } from "@/components/ui/input";
+import { useShoppingList } from "@/contexts/ShoppingListContext";
 
-interface ListNameInputProps {
-  value: string;
-  onChange: (value: string) => void;
-}
-
-export default function ListNameInput({ value, onChange }: ListNameInputProps) {
+export default function ListNameInput() {
+  const { listName, setListName } = useShoppingList();
+  
   return (
     <div className="mb-6">
       <Input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
+        value={listName}
+        onChange={(e) => setListName(e.target.value)}
         className="text-lg font-medium p-3 border-2 focus-visible:ring-feira-green"
         placeholder="Nome da lista"
       />

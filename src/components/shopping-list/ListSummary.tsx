@@ -1,10 +1,9 @@
 
-interface ListSummaryProps {
-  totalItems: number;
-  totalPrice: number;
-}
+import { useShoppingList } from "@/contexts/ShoppingListContext";
 
-export default function ListSummary({ totalItems, totalPrice }: ListSummaryProps) {
+export default function ListSummary() {
+  const { totalItems, totalPrice } = useShoppingList();
+  
   return (
     <div className="mb-4">
       <div className="text-sm text-muted-foreground">

@@ -5,39 +5,27 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import ProductRegistrationButton from "@/components/ProductRegistrationButton";
-
-interface Product {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  unit: string;
-}
+import { useShoppingList } from "@/contexts/ShoppingListContext";
+import { Product } from "./types";
 
 interface ProductSearchProps {
-  searchTerm: string;
-  onSearchChange: (value: string) => void;
-  onAddItem: (product: Product) => void;
-  onCustomItemAdd: (name: string) => void;
-  onAddButtonClick: () => void;
   products: Product[];
-  existingItems: Product[];
 }
 
-export default function ProductSearch({ 
-  searchTerm, 
-  onSearchChange, 
-  onAddItem, 
-  onCustomItemAdd,
-  onAddButtonClick,
-  products,
-  existingItems
-}: ProductSearchProps) {
+export default function ProductSearch({ products }: ProductSearchProps) {
+  const { 
+    searchTerm, 
+    setSearchTerm, 
+    handleAddItem, 
+    setNewItemName, 
+    setIsAddingItem, 
+    items 
+  } = useShoppingList();
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   const filteredSuggestions = products.filter(product => 
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    !existingItems.some(item => item.name === product.name)
+    !items.some(item => item.name === product.name)
   );
 
   // Close suggestions when clicking outside
@@ -67,7 +55,7 @@ export default function ProductSearch({
             className="pl-9"
             value={searchTerm}
             onChange={(e) => {
-              onSearchChange(e.target.value);
+              setSearchTerm(e.target.value);
               setShowSuggestions(true);
             }}
             onFocus={() => setShowSuggestions(true)}
@@ -77,7 +65,7 @@ export default function ProductSearch({
         <Button
           className="bg-feira-green hover:bg-feira-green-dark text-white"
           size="icon"
-          onClick={onAddButtonClick}
+          onClick={() => setIsAddingItem(true)}
           aria-label="Adicionar item personalizado"
         >
           <Plus className="h-5 w-5" />
@@ -93,7 +81,7 @@ export default function ProductSearch({
                 className="p-2 hover:bg-muted cursor-pointer rounded flex justify-between items-center"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onAddItem(product);
+                  handleAddItem(product);
                   setShowSuggestions(false);
                 }}
               >
@@ -112,7 +100,8 @@ export default function ProductSearch({
                 className="text-feira-green p-0 h-auto" 
                 onClick={(e) => {
                   e.stopPropagation();
-                  onCustomItemAdd(searchTerm);
+                  setNewItemName(searchTerm);
+                  setIsAddingItem(true);
                   setShowSuggestions(false);
                 }}
               >
