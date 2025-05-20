@@ -191,6 +191,21 @@
   }
 }
 
+@keyframes shine {
+  100% {
+    transform: translateX(100%) skew(-12deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
 /* Custom animations */
 .animate-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
@@ -210,6 +225,22 @@
 
 .animate-scale-in {
   animation: scaleIn 0.6s ease-out forwards;
+}
+
+.animate-shine {
+  animation: shine 0.85s ease-in-out;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.5);
+  opacity: 0.6;
 }
 
 .full-page-background {
