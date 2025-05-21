@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
 import PageContainer from "@/components/PageContainer";
 import ShoppingListCard from "@/components/ShoppingListCard";
+import AppNameBackground from "@/components/AppNameBackground";
 
 export default function ShoppingLists() {
   const navigate = useNavigate();
@@ -26,12 +27,8 @@ export default function ShoppingLists() {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      {/* Full-screen background image with gradient overlay */}
-      <div 
-        className="full-page-background" 
-        style={{ backgroundImage: "url(https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000)" }}
-      />
-      <div className="gradient-overlay" />
+      {/* App name background */}
+      <AppNameBackground />
       
       <Header title="Minhas Listas" showSearch={false} fullCoverBackground={true} />
       

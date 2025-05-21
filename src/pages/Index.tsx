@@ -10,6 +10,7 @@ import HomeHero from "@/components/HomeHero";
 import RecentShoppingLists from "@/components/RecentShoppingLists";
 import HomeFeatures from "@/components/HomeFeatures";
 import AIChatButton from "@/components/AIChatButton";
+import AppNameBackground from "@/components/AppNameBackground";
 
 export default function Index() {
   const { toast } = useToast();
@@ -33,12 +34,8 @@ export default function Index() {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      {/* Full-screen background image with gradient overlay */}
-      <div 
-        className="full-page-background" 
-        style={{ backgroundImage: "url(https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000)" }}
-      />
-      <div className="gradient-overlay" />
+      {/* App name background */}
+      <AppNameBackground />
       
       <Header 
         onSearchClick={handleSearchClick}
