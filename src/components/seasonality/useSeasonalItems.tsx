@@ -84,7 +84,7 @@ export default function useSeasonalItems() {
         name: "Goiaba", 
         category: "frutas", 
         price: 0, 
-        imageSrc: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&auto=format&fit=crop" 
+        imageSrc: "/lovable-uploads/76e9de85-96fd-47ba-b6f2-8a3372ca017a.png" 
       },
       { 
         id: 12, 

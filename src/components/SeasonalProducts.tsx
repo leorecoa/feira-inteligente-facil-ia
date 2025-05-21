@@ -44,7 +44,7 @@ export default function SeasonalProducts() {
         { id: "9", name: "Laranja", imageSrc: "https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=800&auto=format&fit=crop", price: 0 },
         { id: "10", name: "Mexerica", imageSrc: "/lovable-uploads/addb90dc-f718-4d26-96d6-f2b5fab8b45d.png", price: 0 },
         { id: "11", name: "Maçã", imageSrc: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=800&auto=format&fit=crop", price: 0 },
-        { id: "12", name: "Uva", imageSrc: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=800&auto=format&fit=crop", price: 0 },
+        { id: "12", name: "Goiaba", imageSrc: "/lovable-uploads/76e9de85-96fd-47ba-b6f2-8a3372ca017a.png", price: 0 },
       ],
     };
     
