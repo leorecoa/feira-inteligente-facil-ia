@@ -2,6 +2,7 @@
 import { Search, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
+import Logo from "./Logo";
 
 interface HeaderProps {
   title?: string;
@@ -49,16 +50,7 @@ export default function Header({
             <h1 className="text-lg font-medium">{title}</h1>
           ) : (
             <div className="flex items-center justify-center w-full animate-fade-in">
-              <div className="flex items-center">
-                <span className="text-feira-green font-bold text-xl animate-title-entrance relative">
-                  Minha Feira
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-feira-green/30 rounded-full transform scale-x-0 animate-scale-in" style={{animationDelay: '0.8s', animationFillMode: 'forwards'}}></span>
-                </span>
-                <span className="font-bold text-xl text-feira-orange ml-1 animate-title-entrance-delayed relative">
-                  Fácil Fácil
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-feira-orange/30 rounded-full transform scale-x-0 animate-scale-in" style={{animationDelay: '1s', animationFillMode: 'forwards'}}></span>
-                </span>
-              </div>
+              <Logo />
             </div>
           )}
         </div>
