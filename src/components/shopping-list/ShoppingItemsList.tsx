@@ -66,6 +66,12 @@ function getCategoryDisplayName(categoryId: string): string {
     "congelados": "Congelados",
     "eletronicos": "Eletrônicos",
     "enlatados": "Enlatados",
+    "laticinios": "Laticínios",
+    "limpeza": "Material de Limpeza",
+    "mercearia": "Mercearia",
+    "padaria": "Padaria",
+    "peixaria": "Peixaria",
+    "pet": "Pet",
     "Outros": "Outros Itens"
   };
   

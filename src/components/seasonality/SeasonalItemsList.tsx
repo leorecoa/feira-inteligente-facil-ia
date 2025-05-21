@@ -17,7 +17,13 @@ export default function SeasonalItemsList({ items, onAddToCart }: SeasonalItemsL
     { value: "bebidas", label: "Bebidas" },
     { value: "congelados", label: "Congelados" },
     { value: "eletronicos", label: "Eletrônicos" },
-    { value: "enlatados", label: "Enlatados" }
+    { value: "enlatados", label: "Enlatados" },
+    { value: "laticinios", label: "Laticínios" },
+    { value: "limpeza", label: "Limpeza" },
+    { value: "mercearia", label: "Mercearia" },
+    { value: "padaria", label: "Padaria" },
+    { value: "peixaria", label: "Peixaria" },
+    { value: "pet", label: "Pet" }
   ];
 
   return (

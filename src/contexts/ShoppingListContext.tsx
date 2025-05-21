@@ -58,41 +58,91 @@ export const ShoppingListProvider: React.FC<ShoppingListProviderProps> = ({
     setSearchTerm("");
   };
 
+  const detectCategory = (name: string): string => {
+    const nameLower = name.toLowerCase().trim();
+    
+    // Açougue
+    if (/carne|bife|frango|porco|linguiça|costela|alcatra|cupim|músculo|picanha|peito|coxa|asa|lombo|miúdos/i.test(nameLower)) {
+      return "acougue";
+    }
+    
+    // Bebês
+    if (/fralda|chupeta|bebê|mamadeira|lenço umedecido|manta|shampoo bebê|sabonete bebê/i.test(nameLower)) {
+      return "bebes";
+    }
+    
+    // Bebidas
+    if (/refrigerante|suco|água|cerveja|vinho|whisky|conhaque|vodca|destilado/i.test(nameLower)) {
+      return "bebidas";
+    }
+    
+    // Congelados
+    if (/congelado|sorvete|pizza|gelo|nugget|empanado/i.test(nameLower)) {
+      return "congelados";
+    }
+    
+    // Eletrônicos
+    if (/liquidificador|batedeira|televisor|geladeira|freezer|ventilador|aspirador|secador|balança|churrasqueira/i.test(nameLower)) {
+      return "eletronicos";
+    }
+    
+    // Enlatados
+    if (/lata|enlatado|atum|sardinha|milho|ervilha|leite condensado|creme de leite|azeite|óleo/i.test(nameLower)) {
+      return "enlatados";
+    }
+    
+    // Frutas
+    if (/maçã|banana|abacaxi|laranja|uva|morango|pera|melancia|melão|kiwi|manga|limão/i.test(nameLower)) {
+      return "frutas";
+    }
+    
+    // Legumes
+    if (/tomate|cenoura|batata|cebola|beterraba|abóbora|abobrinha|berinjela|pepino|pimentão/i.test(nameLower)) {
+      return "legumes";
+    }
+    
+    // Verduras
+    if (/alface|couve|rúcula|espinafre|agrião|repolho|acelga|salsa|cebolinha|coentro/i.test(nameLower)) {
+      return "verduras";
+    }
+    
+    // Laticínios
+    if (/leite|manteiga|requeijão|iogurte|queijo|cream cheese|sobremesa láctea|danoninho|petit suisse/i.test(nameLower)) {
+      return "laticinios";
+    }
+    
+    // Material de limpeza
+    if (/detergente|amaciante|flanela|sabão|água sanitária|tira manchas|pano|saco de lixo|balde|vassoura|rodo|palha de aço/i.test(nameLower)) {
+      return "limpeza";
+    }
+    
+    // Mercearia
+    if (/feijão|arroz|aveia|açúcar|sal|farinha|cereal|café|macarrão|grão/i.test(nameLower)) {
+      return "mercearia";
+    }
+    
+    // Padaria
+    if (/pão|pães|salgado|doce|bolo|torta|croissant|sonho|rosca|broa/i.test(nameLower)) {
+      return "padaria";
+    }
+    
+    // Peixaria
+    if (/peixe|salmão|atum|sardinha|camarão|lula|polvo|frutos do mar|marisco|bacalhau/i.test(nameLower)) {
+      return "peixaria";
+    }
+    
+    // Pet
+    if (/ração|brinquedo|pet|coleira|tapete|areia|gato|cachorro|pássaro|casinha|comedouro/i.test(nameLower)) {
+      return "pet";
+    }
+    
+    return "Outros";
+  };
+
   const handleCreateCustomItem = () => {
     if (newItemName.trim()) {
-      // Try to determine category based on name keywords
-      let category = "Outros";
-      
-      const name = newItemName.toLowerCase();
-      
-      if (name.includes("carne") || name.includes("bife") || name.includes("frango") || 
-          name.includes("porco") || name.includes("linguiça") || name.includes("costela")) {
-        category = "acougue";
-      } else if (name.includes("fralda") || name.includes("chupeta") || name.includes("bebê") || 
-                name.includes("mamadeira")) {
-        category = "bebes";
-      } else if (name.includes("refrigerante") || name.includes("suco") || name.includes("água") || 
-                name.includes("cerveja") || name.includes("vinho")) {
-        category = "bebidas";
-      } else if (name.includes("congelado") || name.includes("sorvete") || name.includes("pizza") || 
-                name.includes("gelo")) {
-        category = "congelados";
-      } else if (name.includes("liquidificador") || name.includes("batedeira") || 
-                name.includes("televisor") || name.includes("geladeira")) {
-        category = "eletronicos";
-      } else if (name.includes("lata") || name.includes("enlatado") || name.includes("atum") || 
-                name.includes("sardinha") || name.includes("milho") || name.includes("ervilha")) {
-        category = "enlatados";
-      } else if (name.includes("maçã") || name.includes("banana") || name.includes("abacaxi") || 
-                name.includes("laranja")) {
-        category = "frutas";
-      } else if (name.includes("tomate") || name.includes("cenoura") || name.includes("batata") || 
-                name.includes("cebola")) {
-        category = "legumes";
-      } else if (name.includes("alface") || name.includes("couve") || name.includes("rúcula") || 
-                name.includes("espinafre")) {
-        category = "verduras";
-      }
+      // Detect category based on name keywords
+      const category = detectCategory(newItemName);
       
       const newItem: ShoppingItem = {
         id: `item-${Date.now()}`,
